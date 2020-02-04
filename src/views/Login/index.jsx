@@ -5,6 +5,7 @@ import { firebaseApp } from '../../utils/firebase'
 
 import withSafeArea from '../../hocs/withSafeView'
 import {
+    Head,
     ProfileImg,
     Input,
     Container,
@@ -16,33 +17,27 @@ import {
 } from './styled'
 
 const Login = ({ navigation }) => {
-    const [email, setEmail] = useState(null)
-    const [pass, setPass] = useState(null)
+    const [email, setEmail] = useState("")
+    const [pass, setPass] = useState("")
 
     const signin = () => {
-        if (email === null || pass === null) {
-            Alert.alert(
-                'Authentication Failed',
-                'Please enter your email and password',
-                [{ text: 'OK', onPress: () => { } }],
-                { cancelable: false },
-            )
-        } else if (firebaseApp) {
+        if (firebaseApp) {
             firebaseApp
                 .auth()
                 .signInWithEmailAndPassword(email, pass)
                 .then(() => {
-                    firebase
+                    firebaseApp
                         .auth()
                         .currentUser.getIdToken(/* forceRefresh */ true)
                         .then(function (idToken) {
                             // Send token to your backend via HTTPS
                             // ...
+                            console.log('login success');
+                            navigation.navigate('Main')
                         })
                         .catch(function (error) {
-                            // Handle error
+
                         })
-                    navigation.navigate('Home')
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -57,14 +52,7 @@ const Login = ({ navigation }) => {
     }
 
     const signup = () => {
-        if (email === null || pass === null) {
-            Alert.alert(
-                'Authentication Failed',
-                'Please enter your email and password',
-                [{ text: 'OK', onPress: () => { } }],
-                { cancelable: false },
-            )
-        } else if (firebaseApp) {
+        if (firebaseApp) {
             firebaseApp
                 .auth()
                 .createUserWithEmailAndPassword(email, pass)
@@ -78,10 +66,12 @@ const Login = ({ navigation }) => {
                     )
                 })
         }
+        // navigation.navigate('SignUp')
     }
 
     return (
         <Container>
+            <Head>Restaurant management application</Head>
             <ProfileImg source={require('../../../assets/hamburger.jpg')} />
             <Input
                 onChangeText={text => {

@@ -5,7 +5,9 @@ import withSafeArea from '../../hocs/withSafeView'
 const Main = ({ navigation }) => {
 
     return (
-        <View></View>
+        <View>
+
+        </View>
     )
 }
 

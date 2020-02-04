@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 
+export const Head = styled.Text`
+  font-size: 24px;
+  text-align: center;
+  margin: 15px;
+  margin-bottom: 70px;
+`
+
 export const Container = styled.View`
   display: flex;
   flex-direction: column;

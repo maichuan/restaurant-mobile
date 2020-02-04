@@ -6,11 +6,9 @@ import { compose } from 'recompose'
 import PropTypes from 'prop-types'
 import AppNavigator from '../navigators/AppNavigator'
 
-const Main = () => {
+const Main = ({ authStore }) => {
     return (
-        <View>
-            <AppNavigator />
-        </View>
+        <AppNavigator />
     )
 }
 

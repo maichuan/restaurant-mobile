@@ -17,7 +17,8 @@ const options = {
 
 export default createStackNavigator(
     {
-        Login: Login
+        Login: Login,
+        SignUp: SignUp
     },
     options
 )
