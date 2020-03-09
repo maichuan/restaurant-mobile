@@ -8,7 +8,6 @@ export const Container = styled.KeyboardAvoidingView`
     margin-left: 10px;
     margin-right: 10px;
 `
-
 export const Head = styled.Text`
     font-size: 24px;
     margin: 15px;
@@ -16,7 +15,6 @@ export const Head = styled.Text`
 `
 export const FormBlock = styled.View`
 `
-
 export const Input = styled.TextInput`
     height: 40px;
     min-width: 300px;
@@ -25,4 +23,15 @@ export const Input = styled.TextInput`
     margin: 10px 0px;
     padding: 0px 5px;
     border-radius: 5px;
+`
+export const RegButton = styled.TouchableOpacity`
+    min-width: 300px;
+    background-color: grey;
+    border: 2px solid grey;
+    border-radius: 5px;
+`
+export const RegText = styled.Text`
+    color: white;
+    margin: 10px;
+    text-align: center;
 `

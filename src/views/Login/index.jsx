@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { firebaseApp } from '../../utils/firebase'
 
 import withSafeArea from '../../hocs/withSafeView'
+import dismissKeyBoard from '../../hocs/dismissKeyboard'
 import {
     Head,
     ProfileImg,
@@ -70,38 +71,35 @@ const Login = ({ navigation }) => {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
-            <Container
-                behavior="padding">
-                <>
-                    <Head>Restaurant management application</Head>
-                    <ProfileImg source={require('../../../assets/hamburger.jpg')} />
-                    <Input
-                        onChangeText={text => {
-                            setEmail(text)
-                        }}
-                        placeholder="Email Addesss"
-                    />
-                    <Input
-                        onChangeText={text => {
-                            setPass(text)
-                        }}
-                        secureTextEntry
-                        placeholder="Password"
-                    />
-                    <BGroup>
-                        <SLButton onPress={signin}>
-                            <SText>SignIn</SText>
-                        </SLButton>
-                        <VLine />
-                        <SRButton onPress={register}>
-                            <SText>Register</SText>
-                        </SRButton>
-                    </BGroup>
-                </>
-            </Container>
-        </TouchableWithoutFeedback>
+        <Container
+            behavior="padding">
+            <>
+                <Head>Restaurant management application</Head>
+                <ProfileImg source={require('../../../assets/hamburger.jpg')} />
+                <Input
+                    onChangeText={text => {
+                        setEmail(text)
+                    }}
+                    placeholder="Email Addesss"
+                />
+                <Input
+                    onChangeText={text => {
+                        setPass(text)
+                    }}
+                    secureTextEntry
+                    placeholder="Password"
+                />
+                <BGroup>
+                    <SLButton onPress={signin}>
+                        <SText>SignIn</SText>
+                    </SLButton>
+                    <VLine />
+                    <SRButton onPress={register}>
+                        <SText>Register</SText>
+                    </SRButton>
+                </BGroup>
+            </>
+        </Container>
     )
 }
 
@@ -109,4 +107,4 @@ Login.propTypes = {
     navigation: PropTypes.object,
 }
 
-export default withSafeArea(Login)
+export default dismissKeyBoard(withSafeArea(Login))
