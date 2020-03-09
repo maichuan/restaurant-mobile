@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Login from '../views/Login'
-import SignUp from '../views/SignUp'
+import Register from '../views/Register'
 import { createStackNavigator } from 'react-navigation-stack'
 
 const options = {
@@ -18,7 +18,7 @@ const options = {
 export default createStackNavigator(
     {
         Login: Login,
-        SignUp: SignUp
+        Register: Register
     },
     options
 )

@@ -7,7 +7,7 @@ export const Head = styled.Text`
   margin-bottom: 70px;
 `
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
   display: flex;
   flex-direction: column;
   align-items: center;

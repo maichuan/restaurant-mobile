@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import PropTypes from 'prop-types'
 import { firebaseApp } from '../../utils/firebase'
 
@@ -51,51 +51,57 @@ const Login = ({ navigation }) => {
         }
     }
 
-    const signup = () => {
-        if (firebaseApp) {
-            firebaseApp
-                .auth()
-                .createUserWithEmailAndPassword(email, pass)
-                .catch(function (error) {
-                    console.log(error)
-                    Alert.alert(
-                        'SignUp Failed',
-                        'Check your email format',
-                        [{ text: 'OK', onPress: () => { } }],
-                        { cancelable: false },
-                    )
-                })
-        }
-        // navigation.navigate('SignUp')
+    const register = () => {
+        // if (firebaseApp) {
+        //     firebaseApp
+        //         .auth()
+        //         .createUserWithEmailAndPassword(email, pass)
+        //         .catch(function (error) {
+        //             console.log(error)
+        //             Alert.alert(
+        //                 'SignUp Failed',
+        //                 'Check your email format',
+        //                 [{ text: 'OK', onPress: () => { } }],
+        //                 { cancelable: false },
+        //             )
+        //         })
+        // }
+        navigation.navigate('Register')
     }
 
     return (
-        <Container>
-            <Head>Restaurant management application</Head>
-            <ProfileImg source={require('../../../assets/hamburger.jpg')} />
-            <Input
-                onChangeText={text => {
-                    setEmail(text)
-                }}
-                placeholder="Email Addesss"
-            />
-            <Input
-                onChangeText={text => {
-                    setPass(text)
-                }}
-                secureTextEntry
-                placeholder="Password"
-            />
-            <BGroup>
-                <SLButton onPress={signin}>
-                    <SText>SignIn</SText>
-                </SLButton>
-                <VLine />
-                <SRButton onPress={signup}>
-                    <SText>SignUp</SText>
-                </SRButton>
-            </BGroup>
-        </Container>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+
+            <Container
+                behavior="padding">
+                <>
+                    <Head>Restaurant management application</Head>
+                    <ProfileImg source={require('../../../assets/hamburger.jpg')} />
+                    <Input
+                        onChangeText={text => {
+                            setEmail(text)
+                        }}
+                        placeholder="Email Addesss"
+                    />
+                    <Input
+                        onChangeText={text => {
+                            setPass(text)
+                        }}
+                        secureTextEntry
+                        placeholder="Password"
+                    />
+                    <BGroup>
+                        <SLButton onPress={signin}>
+                            <SText>SignIn</SText>
+                        </SLButton>
+                        <VLine />
+                        <SRButton onPress={register}>
+                            <SText>Register</SText>
+                        </SRButton>
+                    </BGroup>
+                </>
+            </Container>
+        </TouchableWithoutFeedback>
     )
 }
 
