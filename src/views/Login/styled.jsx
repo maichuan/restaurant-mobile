@@ -3,20 +3,20 @@ import styled from 'styled-components'
 export const Head = styled.Text`
   font-size: 24px;
   text-align: center;
-  margin: 15px;
-  margin-bottom: 70px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
 `
 
 export const Container = styled.KeyboardAvoidingView`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   flex: 1;
 `
 export const ProfileImg = styled.Image`
   width: 150px;
   height: 150px;
+  margin: 30px;
 `
 export const Input = styled.TextInput`
   height: 40px;

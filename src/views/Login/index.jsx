@@ -26,19 +26,11 @@ const Login = ({ navigation }) => {
             firebaseApp
                 .auth()
                 .signInWithEmailAndPassword(email, pass)
-                .then(() => {
-                    firebaseApp
-                        .auth()
-                        .currentUser.getIdToken(/* forceRefresh */ true)
-                        .then(function (idToken) {
-                            // Send token to your backend via HTTPS
-                            // ...
-                            console.log('login success');
-                            navigation.navigate('Main')
-                        })
-                        .catch(function (error) {
-
-                        })
+                .then(user => {
+                    serverClient.post('/restaurants', {
+                        uid: user.user.uid,
+                    })
+                    navigation.navigate('Main')
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -53,20 +45,6 @@ const Login = ({ navigation }) => {
     }
 
     const register = () => {
-        // if (firebaseApp) {
-        //     firebaseApp
-        //         .auth()
-        //         .createUserWithEmailAndPassword(email, pass)
-        //         .catch(function (error) {
-        //             console.log(error)
-        //             Alert.alert(
-        //                 'SignUp Failed',
-        //                 'Check your email format',
-        //                 [{ text: 'OK', onPress: () => { } }],
-        //                 { cancelable: false },
-        //             )
-        //         })
-        // }
         navigation.navigate('Register')
     }
 
