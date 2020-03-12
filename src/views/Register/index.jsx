@@ -17,7 +17,9 @@ const Register = ({ navigation }) => {
                 .auth()
                 .createUserWithEmailAndPassword(resEmail, resPass)
                 .then(user => {
-                    //serverClient.post()
+                    serverClient.post('restaurants', {
+                        uid: user.user.uid,
+                    })
 
                 })
                 .catch(function (error) {

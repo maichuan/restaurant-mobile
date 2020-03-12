@@ -27,9 +27,6 @@ const Login = ({ navigation }) => {
                 .auth()
                 .signInWithEmailAndPassword(email, pass)
                 .then(user => {
-                    serverClient.post('/restaurants', {
-                        uid: user.user.uid,
-                    })
                     navigation.navigate('Main')
                 })
                 .catch(function (error) {

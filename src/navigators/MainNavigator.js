@@ -1,10 +1,31 @@
 import React from 'react'
 
-import Main from '../views/Main'
+import Home from '../views/Home'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
+
+const MainTab = createStackNavigator({
+    Home: Home
+})
+
+const TabNav = createBottomTabNavigator({
+    MainTab
+},
+    {
+        initialRouteName: 'MainTab',
+    })
 
 export default createStackNavigator(
     {
-        Main: Main
-    }
+        TabNav
+    },
+    {
+        mode: 'modal',
+        headerMode: 'none',
+        defaultNavigationOptions: {
+            gestureEnabled: true,
+            cardOverlayEnabled: true,
+            ...TransitionPresets.ModalPresentationIOS,
+        },
+    },
 )
