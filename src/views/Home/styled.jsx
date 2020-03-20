@@ -4,8 +4,7 @@ export const Container = styled.View`
     
 `
 export const Content = styled.ScrollView`
-    flex: 1;
-    justify-content: center;
+    flex-grow: 1;
 `
 
 export const HeadBox = styled.View`

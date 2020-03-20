@@ -12,26 +12,27 @@ const Register = ({ navigation }) => {
     const [resPass, setResPass] = useState("")
 
     const register = () => {
-        if (firebaseApp) {
-            firebaseApp
-                .auth()
-                .createUserWithEmailAndPassword(resEmail, resPass)
-                .then(user => {
-                    serverClient.post('restaurants', {
-                        uid: user.user.uid,
-                    })
+        navigation.navigate('Main');
+        // if (firebaseApp) {
+        //     firebaseApp
+        //         .auth()
+        //         .createUserWithEmailAndPassword(resEmail, resPass)
+        //         .then(user => {
+        //             serverClient.post('restaurants', {
+        //                 uid: user.user.uid,
+        //             })
 
-                })
-                .catch(function (error) {
-                    console.log(error)
-                    Alert.alert(
-                        'SignUp Failed',
-                        'Check your email format',
-                        [{ text: 'OK', onPress: () => { } }],
-                        { cancelable: false },
-                    )
-                })
-        }
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error)
+        //             Alert.alert(
+        //                 'SignUp Failed',
+        //                 'Check your email format',
+        //                 [{ text: 'OK', onPress: () => { } }],
+        //                 { cancelable: false },
+        //             )
+        //         })
+        // }
     }
 
     return (
