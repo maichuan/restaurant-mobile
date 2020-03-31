@@ -2,8 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { View, Alert } from 'react-native'
 import withSafeArea from '../../hocs/withSafeView'
 import { serverClient } from '../../api'
-import { Container, ContentBox, Content, HeadBox, Switch, OrderBox } from './styled'
 import OrderCard from '../../components/home/OrderCard'
+import {
+    Container,
+    HeadBox,
+    HeadText,
+    StatusBox,
+    StatusText,
+    Switch,
+    OrderBox,
+    OrderHeader,
+    OrderHeaderText,
+    OrderContent
+} from './styled'
 
 const Home = ({ navigation }) => {
     const [resStatus, setResStatus] = useState(false)
@@ -19,13 +30,19 @@ const Home = ({ navigation }) => {
 
     return (
         <Container>
-            <ContentBox>
-                <Content>
-                    <HeadBox></HeadBox>
-                    <Switch onValueChange={toggleResStatus} value={resStatus} />
-                    <OrderBox><OrderCard /></OrderBox>
-                </Content>
-            </ContentBox>
+            <HeadBox>
+                <HeadText>Welcome to your restaurant</HeadText>
+            </HeadBox>
+            <StatusBox>
+                <StatusText>Status</StatusText>
+            </StatusBox>
+            <Switch onValueChange={toggleResStatus} value={resStatus} />
+            <OrderBox>
+                <OrderHeader><OrderHeaderText>Order List</OrderHeaderText></OrderHeader>
+                <OrderContent>
+                    <OrderCard />
+                </OrderContent>
+            </OrderBox>
         </Container>
     )
 }
