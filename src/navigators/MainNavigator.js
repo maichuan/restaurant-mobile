@@ -19,6 +19,10 @@ const MainTab = createStackNavigator({
     Home: Home
 }, options)
 
+const OptionsTab = createStackNavigator({
+
+})
+
 const TabNav = createBottomTabNavigator({
     MainTab
 },

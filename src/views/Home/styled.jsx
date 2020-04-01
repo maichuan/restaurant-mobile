@@ -1,25 +1,27 @@
 import styled from 'styled-components'
+import Constant from '../../utils/constants'
 
 export const Container = styled.View`
     align-items: center;
 `
 export const HeadBox = styled.View`
     width: 100%;
-    height: 100px;
-    background-color: red;
+    height: 130px;
+    background-color: ${Constant.tabColor};
     flex-direction: column;
     justify-content: center;
 `
 export const HeadText = styled.Text`
     font-weight: bold;
-    font-size: 24px;
+    font-size: 22px;
     color: white;
     align-self: center;
+    padding-top: 30px;
 `
 export const StatusBox = styled.View`
     border-bottom-width: 1.3px;
     border-color: grey;
-    min-width: 320px;
+    width: 320px;
     margin-top: 20px;
     flex-direction: row;
     justify-content: space-between;
@@ -28,8 +30,13 @@ export const StatusText = styled.Text`
     font-size: 24px;
     color: grey;
 `
-export const Switch = styled.Switch`
-
+export const StatusToggle = styled.TouchableOpacity`
+    border-radius: 3px;
+    width: 150px;
+    height: 35px;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
 `
 export const OrderHeader = styled.View`
     background-color: grey;
