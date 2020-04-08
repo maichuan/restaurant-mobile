@@ -46,7 +46,7 @@ OrderCard.propTypes = {
 
 OrderCard.defaultProps = {
     orderData: {
-        name: 'เบอเกอร์',
+        name: 'คุณก้อง',
         des: 'เบอเกอร์ท่านก้อง',
         qty: 1
     }

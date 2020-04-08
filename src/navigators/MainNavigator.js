@@ -1,8 +1,12 @@
 import React from 'react'
 
 import Home from '../views/Home'
+import Options from '../views/Options'
+import Restaurant from '../views/Restaurant'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { createStackNavigator } from 'react-navigation-stack'
+import { TransitionPresets, createStackNavigator } from 'react-navigation-stack'
+import Constants from '../utils/constants'
+import TabBarIcon from '../components/common/TabBarIcon'
 
 const options = {
     headerMode: 'none',
@@ -15,19 +19,88 @@ const options = {
     }
 }
 
+const optionsHeader = {
+    defaultNavigationOptions: {
+        headerStyle: {
+            backgroundColor: Constants.tabColor,
+        },
+        headerTintColor: Constants.strongColor,
+        headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: Constants.strongColor,
+        },
+        headerBackTitle: ' ',
+    },
+}
+
 const MainTab = createStackNavigator({
     Home: Home
 }, options)
 
-const OptionsTab = createStackNavigator({
+MainTab.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true
+    if (navigation.state.index > 0) {
+        tabBarVisible = false
+    }
 
-})
+    return {
+        tabBarVisible,
+        tabBarLabel: 'Home',
+        // eslint-disable-next-line react/prop-types
+        tabBarIcon: ({ focused, tintColor }) => (
+            <TabBarIcon
+                focused={focused}
+                tintColor={tintColor}
+                type="FontAwesome"
+                name="home"
+            />
+        ),
+    }
+}
+
+const OptionsTab = createStackNavigator({
+    Options: Options
+}, optionsHeader)
+
+OptionsTab.navigationOptions = ({ navigation }) => {
+    return {
+        tabBarLabel: 'Options',
+        tabBarIcon: ({ tintColor }) => (
+            <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gears" />
+        )
+    }
+}
+
+const RestaurantTab = createStackNavigator({
+    Restaurant: Restaurant
+}, optionsHeader)
+
+RestaurantTab.navigationOptions = ({ navigation }) => {
+    return {
+        tabBarLabel: 'Restaurant',
+        tabBarIcon: ({ tintColor }) => {
+            <TabBarIcon tintColor={tintColor} type="FontAwesome" name="bars" />
+        }
+    }
+}
 
 const TabNav = createBottomTabNavigator({
-    MainTab
+    MainTab,
+    RestaurantTab,
+    OptionsTab,
 },
     {
         initialRouteName: 'MainTab',
+        tabBarOptions: {
+            showLabel: false,
+            activeTintColor: Constants.strongColor,
+            inactiveTintColor: Constants.weakColor,
+            style: {
+                backgroundColor: Constants.tabColor,
+                height: 60,
+            },
+        },
     })
 
 export default createStackNavigator(
@@ -40,6 +113,7 @@ export default createStackNavigator(
         defaultNavigationOptions: {
             gestureEnabled: true,
             cardOverlayEnabled: true,
+            ...TransitionPresets.ModalPresentationIOS,
         },
     },
 )

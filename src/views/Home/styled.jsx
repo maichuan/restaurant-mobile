@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Constant from '../../utils/constants'
+import Constants from '../../utils/constants'
 
 export const Container = styled.View`
     align-items: center;
@@ -7,7 +7,7 @@ export const Container = styled.View`
 export const HeadBox = styled.View`
     width: 100%;
     height: 130px;
-    background-color: ${Constant.tabColor};
+    background-color: ${Constants.tabColor};
     flex-direction: column;
     justify-content: center;
 `

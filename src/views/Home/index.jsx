@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Text, Alert } from 'react-native'
-import withSafeArea from '../../hocs/withSafeView'
+import Constants from '../../utils/constants'
 import { serverClient } from '../../api'
 import OrderCard from '../../components/home/OrderCard'
 import {
@@ -19,7 +19,7 @@ import { withTheme } from 'styled-components'
 
 const Home = ({ navigation }) => {
     const [resStatus, setResStatus] = useState(false)
-    const [statusColor, setStatusColor] = useState({ backgroundColor: 'red' })
+    const [statusColor, setStatusColor] = useState({ backgroundColor: Constants.redColor })
     const [statusText, setStatusText] = useState('Close')
 
     // useEffect(() => {
@@ -39,7 +39,7 @@ const Home = ({ navigation }) => {
                 [{
                     text: 'Close my restaurant', onPress: () => {
                         setResStatus(false)
-                        setStatusColor({ backgroundColor: 'red' })
+                        setStatusColor({ backgroundColor: Constants.redColor })
                         setStatusText('Close')
                     }
                 }, {
