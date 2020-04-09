@@ -30,9 +30,13 @@ const Restaurant = () => {
         setMapVisible(false)
     }
 
+    const storeLocation = (location) => {
+        setLocation(location)
+    }
+
     return (
         <Container>
-            <MapModal closeModal={closeModal} visible={mapVisible} />
+            <MapModal storeLocation={storeLocation} closeModal={closeModal} visible={mapVisible} />
             <Content>
                 <EditImg>
                     <Img />

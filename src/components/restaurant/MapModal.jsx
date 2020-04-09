@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Component } from 'react'
 import { Dimensions } from 'react-native'
 import styled from 'styled-components'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
+import { FontAwesome } from '@expo/vector-icons'
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 const CModal = styled.Modal`
 `
@@ -22,7 +25,7 @@ const Content = styled.View`
       width: 0,
       height: 2
     };
-    shadow-opacity: 0.25px;
+    shadow-opacity: 0.25;
     shadow-radius: 3.84px;
     elevation: 5;
 `
@@ -31,28 +34,66 @@ const Header = styled.View`
     height: 35px;
     background-color: white;
     flex-direction: row;
+    justify-content: space-between;
 `
 const Cancel = styled.Button`
 `
+const CurrentLocal = styled.TouchableOpacity`
+    margin: 5px;
+    margin-right: 10px;
+`
 
-const MapModal = ({ visible, closeModal }) => {
+const MapModal = ({ visible, closeModal, storeLocation }) => {
+    const initialState = {
+        region: {
+            latitude: 13.846267,
+            longitude: 100.568651,
+            latitudeDelta: 0.0882,
+            longitudeDelta: 0.0421,
+        },
+        marker: <></>
+    }
+    const [{ region, marker }, setState] = useState(initialState)
+
+    const getCurrentLocal = async () => {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION)
+        if (status !== 'granted') {
+            console.warn('Permission was not granted')
+        }
+        let local = await Location.getCurrentPositionAsync({});
+        let region = {
+            latitude: local.coords.latitude,
+            longitude: local.coords.longitude,
+        }
+    }
+
+    const handleMarker = (coordiantes) => {
+        let c = coordiantes
+        setState({ region: c, marker: <Marker coordinate={c} /> })
+        console.log(region)
+    }
 
     return (
         <CModal visible={visible} animationType="slide"
             transparent={true} >
             <Container>
                 <Content>
-                    <Header><Cancel onPress={closeModal} title='Close' /></Header>
+                    <Header>
+                        <Cancel onPress={() => { closeModal(); setState(initialState) }} title='Close' />
+                        <CurrentLocal onPress={getCurrentLocal}>
+                            <FontAwesome type='FontAwesome' name='location-arrow' size={20} color='grey' />
+                        </CurrentLocal>
+                    </Header>
                     <MapView style={{
                         width: 300,
                         height: 500,
                         borderRadius: 2,
-                    }} initialRegion={{
-                        latitude: 37.78825,
-                        longitude: -122.4324,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }} />
+                    }}
+                        initialRegion={region}
+                        onPress={(event) => { handleMarker(event.nativeEvent.coordinate) }}
+                        onMarkerPress={() => { setState({ marker: <></> }) }}>
+                        {marker}
+                    </MapView>
                 </Content>
             </Container>
         </CModal>
