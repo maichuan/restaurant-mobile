@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Constant from '../../utils/constants'
 
 export const Container = styled.KeyboardAvoidingView`
     display: flex;
@@ -12,6 +13,7 @@ export const Head = styled.Text`
     font-size: 24px;
     margin: 15px;
     margin-bottom: 100px;
+    color: ${Constant.strongColor}
 `
 export const FormBlock = styled.View`
 `
@@ -23,11 +25,12 @@ export const Input = styled.TextInput`
     margin: 10px 0px;
     padding: 0px 5px;
     border-radius: 5px;
+    border-color: ${Constant.tabColor}
 `
 export const RegButton = styled.TouchableOpacity`
     min-width: 300px;
-    background-color: grey;
-    border: 2px solid grey;
+    background-color: ${Constant.tabColor};
+    border: 2px solid ${Constant.tabColor};
     border-radius: 5px;
     margin-top: 10px;
 `

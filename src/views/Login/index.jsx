@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import PropTypes from 'prop-types'
 import { firebaseApp } from '../../utils/firebase'
 
@@ -8,12 +8,13 @@ import dismissKeyBoard from '../../hocs/dismissKeyboard'
 import {
     Head,
     ProfileImg,
+    Content,
     Input,
     Container,
     BGroup,
     SLButton,
     SRButton,
-    VLine,
+    HLine,
     SText,
 } from './styled'
 
@@ -46,11 +47,9 @@ const Login = ({ navigation }) => {
     }
 
     return (
-        <Container
-            behavior="padding">
-            <>
-                <Head>Restaurant management application</Head>
-                <ProfileImg source={require('../../../assets/hamburger.jpg')} />
+        <Container>
+            <ProfileImg />
+            <Content behavior={Platform.Os == "ios" ? "padding" : "height"}>
                 <Input
                     onChangeText={text => {
                         setEmail(text)
@@ -68,12 +67,12 @@ const Login = ({ navigation }) => {
                     <SLButton onPress={signin}>
                         <SText>SignIn</SText>
                     </SLButton>
-                    <VLine />
+                    <HLine />
                     <SRButton onPress={register}>
                         <SText>Register</SText>
                     </SRButton>
                 </BGroup>
-            </>
+            </Content>
         </Container>
     )
 }

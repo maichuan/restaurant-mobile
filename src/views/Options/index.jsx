@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+import Logout from '../../components/options/Logout'
+import { Container } from './styled'
 
 const Options = ({ navigation }) => {
 
-
     return (
-        <View></View>
+        <Container>
+            <Logout navigation={navigation} />
+        </Container>
     )
 }
 

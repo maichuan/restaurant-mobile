@@ -16,7 +16,7 @@ export const InfoBox = styled.View`
 `
 
 export const EditTab = styled.View`
-    height: 30px;
+    min-height: 30px;
     flex-direction: row;
     justify-content: space-between;
     border-color: lightgrey;
@@ -25,20 +25,17 @@ export const EditTab = styled.View`
 `
 export const EditLocal = styled.TouchableOpacity`
     flex-direction: row;
+    width: auto;
 `
 
 export const EditHead = styled.Text`
     
 `
-export const EditText = styled.Text`
-    color: grey;
+export const EditContext = styled.View`
+    flex-direction: row;
 `
 
-export const EditImg = styled.TouchableOpacity`
-    border-radius: 20px;
-    width: 120px;
-    height: 120px;
-    background-color: lightgrey;
-    margin: 20px;
+export const EditText = styled.TextInput`
+    max-width: 100px;
+    color: grey;
 `
-export const Img = styled.Image``

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import Constant from '../../utils/constants'
 
 const Card = styled.TouchableOpacity`
     border-bottom-width: 1px;
-    border-color: grey;
+    border-color: ${Constant.strongColor};
     flex: 1;
     flex-direction: row;
     justify-content: space-between;

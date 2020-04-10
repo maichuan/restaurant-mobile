@@ -39,7 +39,7 @@ export const StatusToggle = styled.TouchableOpacity`
     align-items: center;
 `
 export const OrderHeader = styled.View`
-    background-color: grey;
+    background-color: ${Constants.strongColor};
     flex-direction: column;
     justify-content: center;
 `
@@ -55,7 +55,7 @@ export const OrderBox = styled.View`
     min-width: 320px;
     height: 300px;
     border-width: 1.3px;
-    border-color: grey;
+    border-color: ${Constants.strongColor};
     border-radius: 3px;
     margin-top: 30px;
 `
