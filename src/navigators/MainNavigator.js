@@ -3,6 +3,7 @@ import React from 'react'
 import Home from '../views/Home'
 import Options from '../views/Options'
 import Restaurant from '../views/Restaurant'
+import CreateMenu from '../views/CreateMenu'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { TransitionPresets, createStackNavigator } from 'react-navigation-stack'
 import Constants from '../utils/constants'
@@ -73,7 +74,8 @@ OptionsTab.navigationOptions = ({ navigation }) => {
 }
 
 const RestaurantTab = createStackNavigator({
-    Restaurant: Restaurant
+    Restaurant: Restaurant,
+    CreateMenu: CreateMenu,
 }, optionsHeader)
 
 RestaurantTab.navigationOptions = ({ navigation }) => {

@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import withSafeArea from '../../hocs/withSafeView'
 import MapModal from '../../components/restaurant/MapModal'
 import ProfileImg from '../../components/restaurant/ProfileImg'
+import MenuList from '../../components/restaurant/MenuList'
 import { serverClient } from '../../api'
 import {
     Container,
@@ -16,7 +17,7 @@ import {
     EditText,
 } from './styled'
 
-const Restaurant = () => {
+const Restaurant = ({ navigation }) => {
     const [mapVisible, setMapVisible] = useState(false)
     const [location, setLocation] = useState({})
     const [name, setName] = useState('name')
@@ -65,6 +66,7 @@ const Restaurant = () => {
                         </EditLocal>
                     </EditTab>
                 </InfoBox>
+                <MenuList navigation={navigation} />
             </Content>
         </Container>
     )
