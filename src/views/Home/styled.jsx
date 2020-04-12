@@ -39,14 +39,19 @@ export const StatusToggle = styled.TouchableOpacity`
     align-items: center;
 `
 export const OrderHeader = styled.View`
-    background-color: ${Constants.strongColor};
+    background-color: ${Constants.weakColor};
+    height: 40px;
     flex-direction: column;
     justify-content: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-color: ${Constants.tabColor}
+    border-bottom-width: 1.5px;
 `
 export const OrderHeaderText = styled.Text`
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
-    color: white;
+    color: ${Constants.strongColor};
     padding-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -55,8 +60,8 @@ export const OrderBox = styled.View`
     min-width: 320px;
     height: 300px;
     border-width: 1.3px;
-    border-color: ${Constants.strongColor};
-    border-radius: 3px;
+    border-color: lightgrey;
+    border-radius: 6px;
     margin-top: 30px;
 `
 export const OrderContent = styled.ScrollView``

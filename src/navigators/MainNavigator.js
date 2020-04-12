@@ -48,7 +48,6 @@ MainTab.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
         tabBarLabel: 'Home',
-        // eslint-disable-next-line react/prop-types
         tabBarIcon: ({ focused, tintColor }) => (
             <TabBarIcon
                 focused={focused}
@@ -79,7 +78,12 @@ const RestaurantTab = createStackNavigator({
 }, optionsHeader)
 
 RestaurantTab.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true
+    if (navigation.state.index > 0) {
+        tabBarVisible = false
+    }
     return {
+        tabBarVisible,
         tabBarLabel: 'Restaurant',
         tabBarIcon: ({ tintColor }) => {
             <TabBarIcon tintColor={tintColor} type="FontAwesome" name="bars" />

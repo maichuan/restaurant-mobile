@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { firebaseApp } from '../../utils/firebase'
+import { FontAwesome } from '@expo/vector-icons'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import Constants from 'expo-constants'
 
 const EditImg = styled.TouchableOpacity`
-    border-radius: 20px;
-    background-color: lightgrey;
-    width: 120px;
-    height: 120px;
     margin: 20px;
 `
-const Img = styled.Image`
+const Img = styled.ImageBackground`
     border-radius: 20px;
+    background-color: lightgrey;
+    align-items: center;
+    justify-content: center;
     width: 120px;
     height: 120px;
-    resize-mode: stretch;
 `
 
-const ProfileImg = ({ }) => {
+const ImgPicker = ({ storagePath }) => {
     const [uri, setURI] = useState('')
+    const [imgStatus, setImgStatus] = useState(false)
+
+    useEffect(() => {
+        console.log(imgStatus)
+    })
 
     const getPermissionAsync = async () => {
         if (Constants.platform.ios) {
@@ -42,6 +46,7 @@ const ProfileImg = ({ }) => {
             if (!result.cancelled) {
                 let imgURL = await upLoad(result.uri)
                 console.log(imgURL)
+                setImgStatus(true)
                 setURI(imgURL)
             }
         } catch (E) {
@@ -63,12 +68,16 @@ const ProfileImg = ({ }) => {
         })
     }
 
+    const renderIconImg = () => {
+        return imgStatus ? <></> : <FontAwesome type='FontAwesome' name='image' color='grey' size={35} />
+    }
+
     return (
         <EditImg onPress={onPress}>
-            <Img source={{ uri: uri }} />
+            <Img imageStyle={{ resizeMode: 'stretch', borderRadius: 20 }} source={{ uri: uri }}>{renderIconImg()}</Img>
         </EditImg>
     )
 
 }
 
-export default ProfileImg
+export default ImgPicker

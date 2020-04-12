@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import withSafeArea from '../../hocs/withSafeView'
 import MapModal from '../../components/restaurant/MapModal'
-import ProfileImg from '../../components/restaurant/ProfileImg'
+import ImgPicker from '../../components/restaurant/ImgPicker'
 import MenuList from '../../components/restaurant/MenuList'
 import { serverClient } from '../../api'
 import {
@@ -43,7 +43,7 @@ const Restaurant = ({ navigation }) => {
         <Container>
             <MapModal storeLocation={storeLocation} closeModal={closeModal} visible={mapVisible} />
             <Content>
-                <ProfileImg />
+                <ImgPicker />
                 <InfoBox>
                     <EditTab>
                         <EditHead>Name</EditHead>
