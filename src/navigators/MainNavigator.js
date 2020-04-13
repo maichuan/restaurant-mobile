@@ -85,9 +85,9 @@ RestaurantTab.navigationOptions = ({ navigation }) => {
     return {
         tabBarVisible,
         tabBarLabel: 'Restaurant',
-        tabBarIcon: ({ tintColor }) => {
+        tabBarIcon: ({ tintColor }) => (
             <TabBarIcon tintColor={tintColor} type="FontAwesome" name="bars" />
-        }
+        )
     }
 }
 
