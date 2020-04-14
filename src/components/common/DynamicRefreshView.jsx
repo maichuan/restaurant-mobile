@@ -9,6 +9,7 @@ import constants from "../../utils/constants";
 
 const ScrollBody = styled.ScrollView`
   flex: 1;
+  /* width: 100%; */
   background-color: ${constants.veryWeakColor};
 `;
 

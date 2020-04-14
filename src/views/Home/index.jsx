@@ -7,6 +7,7 @@ import { compose } from "recompose";
 import Constants from "../../utils/constants";
 import { serverClient } from "../../api";
 import OrderCard from "../../components/home/OrderCard";
+import CurrentOrderCard from "../../components/home/CurrectOrderCard";
 import {
   Container,
   HeadBox,
@@ -18,7 +19,9 @@ import {
   OrderHeader,
   OrderHeaderText,
   OrderContent,
+  OrderView,
   SafeView,
+  ProcessView,
 } from "./styled";
 import DynamicRefreshView from "../../components/common/DynamicRefreshView";
 import { withTheme } from "styled-components";
@@ -30,6 +33,7 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
     backgroundColor: Constants.redColor,
   });
   const [statusText, setStatusText] = useState("Close");
+  const [lastDone, setLast] = useState(0);
 
   // useEffect(() => {
   //     console.log(resStatus);
@@ -40,10 +44,12 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
   // })
 
   const fetchOrder = async () => {
+    spinnerStore.open();
     const { data } = await serverClient.get(
       `/order/${authStore.restaurant.id}`
     );
     setData(data.data);
+    spinnerStore.close();
   };
 
   useEffect(() => {
@@ -51,6 +57,10 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
       fetchOrder();
     }
   }, []);
+
+  useEffect(() => {
+    fetchOrder();
+  }, [lastDone]);
 
   const toggleResStatus = () => {
     if (resStatus) {
@@ -93,16 +103,35 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
             </Text>
           </StatusToggle>
         </StatusBox>
-        <OrderBox>
-          <OrderHeader>
-            <OrderHeaderText>Order List</OrderHeaderText>
-          </OrderHeader>
-          <DynamicRefreshView onRefreshAction={fetchOrder}>
-            {data.map((d, i) => (
-              <OrderCard key={i} orderData={d} />
-            ))}
-          </DynamicRefreshView>
-        </OrderBox>
+        <DynamicRefreshView onRefreshAction={fetchOrder}>
+          <OrderView>
+            <ProcessView>
+              <OrderHeaderText size="20px">Current order</OrderHeaderText>
+              {data
+                .filter((d) => d.status == 1)
+                .map((d, i) => (
+                  <CurrentOrderCard
+                    key={i}
+                    restaurantId={authStore.restaurant.id}
+                    orderData={d}
+                    onConfirm={setLast}
+                  />
+                ))}
+            </ProcessView>
+            <OrderBox>
+              <OrderHeader>
+                <OrderHeaderText>Next order</OrderHeaderText>
+              </OrderHeader>
+              <OrderContent>
+                {data
+                  .filter((d) => d.status == 0)
+                  .map((d, i) => (
+                    <OrderCard key={i} orderData={d} />
+                  ))}
+              </OrderContent>
+            </OrderBox>
+          </OrderView>
+        </DynamicRefreshView>
       </Container>
     </SafeView>
   );
