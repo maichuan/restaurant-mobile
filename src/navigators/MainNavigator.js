@@ -1,125 +1,139 @@
-import React from 'react'
+import React from "react";
 
-import Home from '../views/Home'
-import Options from '../views/Options'
-import Restaurant from '../views/Restaurant'
-import CreateMenu from '../views/CreateMenu'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { TransitionPresets, createStackNavigator } from 'react-navigation-stack'
-import Constants from '../utils/constants'
-import TabBarIcon from '../components/common/TabBarIcon'
+import Home from "../views/Home";
+import Options from "../views/Options";
+import Restaurant from "../views/Restaurant";
+import CreateMenu from "../views/CreateMenu";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "react-navigation-stack";
+import Constants from "../utils/constants";
+import TabBarIcon from "../components/common/TabBarIcon";
 
 const options = {
-    headerMode: 'none',
-    navigationOptions: {
-        headerVisible: false,
-        cardStyle: {
-            shadowColor: 'transparent',
-            backgroundColor: 'transparent',
-        },
-    }
-}
+  headerMode: "none",
+  navigationOptions: {
+    headerVisible: false,
+    cardStyle: {
+      shadowColor: "transparent",
+      backgroundColor: "transparent",
+    },
+  },
+};
 
 const optionsHeader = {
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: Constants.tabColor,
-        },
-        headerTintColor: Constants.strongColor,
-        headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 18,
-            color: Constants.strongColor,
-        },
-        headerBackTitle: ' ',
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: Constants.tabColor,
     },
-}
+    headerTintColor: Constants.strongColor,
+    headerTitleStyle: {
+      fontWeight: "bold",
+      fontSize: 18,
+      color: Constants.strongColor,
+    },
+    headerBackTitle: " ",
+  },
+};
 
-const MainTab = createStackNavigator({
-    Home: Home
-}, options)
+const MainTab = createStackNavigator(
+  {
+    Home,
+  },
+  options
+);
 
 MainTab.navigationOptions = ({ navigation }) => {
-    let tabBarVisible = true
-    if (navigation.state.index > 0) {
-        tabBarVisible = false
-    }
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
 
-    return {
-        tabBarVisible,
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ focused, tintColor }) => (
-            <TabBarIcon
-                focused={focused}
-                tintColor={tintColor}
-                type="FontAwesome"
-                name="home"
-            />
-        ),
-    }
-}
+  return {
+    tabBarVisible,
+    tabBarLabel: "Home",
+    tabBarIcon: ({ focused, tintColor }) => (
+      <TabBarIcon
+        focused={focused}
+        tintColor={tintColor}
+        type="FontAwesome"
+        name="home"
+      />
+    ),
+  };
+};
 
-const OptionsTab = createStackNavigator({
-    Options: Options
-}, optionsHeader)
+const OptionsTab = createStackNavigator(
+  {
+    Options: Options,
+  },
+  optionsHeader
+);
 
 OptionsTab.navigationOptions = ({ navigation }) => {
-    return {
-        tabBarLabel: 'Options',
-        tabBarIcon: ({ tintColor }) => (
-            <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gears" />
-        )
-    }
-}
+  return {
+    tabBarLabel: "Options",
+    tabBarIcon: ({ tintColor }) => (
+      <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gears" />
+    ),
+  };
+};
 
-const RestaurantTab = createStackNavigator({
+const RestaurantTab = createStackNavigator(
+  {
     Restaurant: Restaurant,
     CreateMenu: CreateMenu,
-}, optionsHeader)
+  },
+  optionsHeader
+);
 
 RestaurantTab.navigationOptions = ({ navigation }) => {
-    let tabBarVisible = true
-    if (navigation.state.index > 0) {
-        tabBarVisible = false
-    }
-    return {
-        tabBarVisible,
-        tabBarLabel: 'Restaurant',
-        tabBarIcon: ({ tintColor }) => (
-            <TabBarIcon tintColor={tintColor} type="FontAwesome" name="bars" />
-        )
-    }
-}
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+    tabBarLabel: "Restaurant",
+    tabBarIcon: ({ tintColor }) => (
+      <TabBarIcon tintColor={tintColor} type="FontAwesome" name="bars" />
+    ),
+  };
+};
 
-const TabNav = createBottomTabNavigator({
+const TabNav = createBottomTabNavigator(
+  {
     MainTab,
     RestaurantTab,
     OptionsTab,
-},
-    {
-        initialRouteName: 'MainTab',
-        tabBarOptions: {
-            showLabel: false,
-            activeTintColor: Constants.strongColor,
-            inactiveTintColor: Constants.weakColor,
-            style: {
-                backgroundColor: Constants.tabColor,
-                height: 60,
-            },
-        },
-    })
+  },
+  {
+    initialRouteName: "MainTab",
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: Constants.strongColor,
+      inactiveTintColor: Constants.weakColor,
+      style: {
+        backgroundColor: Constants.tabColor,
+        height: 60,
+      },
+    },
+  }
+);
 
 export default createStackNavigator(
-    {
-        TabNav
+  {
+    TabNav,
+  },
+  {
+    mode: "modal",
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gestureEnabled: true,
+      cardOverlayEnabled: true,
+      ...TransitionPresets.ModalPresentationIOS,
     },
-    {
-        mode: 'modal',
-        headerMode: 'none',
-        defaultNavigationOptions: {
-            gestureEnabled: true,
-            cardOverlayEnabled: true,
-            ...TransitionPresets.ModalPresentationIOS,
-        },
-    },
-)
+  }
+);
