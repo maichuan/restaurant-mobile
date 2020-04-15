@@ -8,12 +8,12 @@ import PropTypes from "prop-types";
 import AppNavigator from "../navigators/AppNavigator";
 import { firebaseApp } from "../utils/firebase";
 import { serverClient } from "../api";
+import Spinner from "../components/common/Spinner";
 
 const Main = ({ authStore, spinnerStore }) => {
   const fetchUser = async (user) => {
     const { data } = await serverClient.get(`user/${user.uid}?owner=true`);
     if (data.user) {
-      console.log(data);
       authStore.setUser(data.user);
       authStore.setRestaurant(data.restaurant);
     }

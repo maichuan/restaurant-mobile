@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { BallIndicator } from "react-native-indicators";
 
-import { Width, Height } from "../../utils/utils";
+import { Dimensions } from "react-native";
+
+const Height = Dimensions.get("window").height;
+
+const Width = Dimensions.get("window").width;
 
 const Container = styled.View`
-  width: ${Width};
-  height: ${Height};
+  width: ${Width + "px"};
+  height: ${Height + "px"};
   position: absolute;
   flex: 1;
   justify-content: center;
