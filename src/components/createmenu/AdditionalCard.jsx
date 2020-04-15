@@ -135,12 +135,18 @@ const pickerSelectStyles = StyleSheet.create({
     }
 })
 
-const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditional }) => {
+const AdditionalCard = ({ item, index, editOption, setAdditionalPending, cancelAdditional }) => {
     const [type, setType] = useState()
     const [question, setQuestion] = useState('')
     const [choices, setChoices] = useState([])
     const [choice, setChoice] = useState('')
     const [completeStat, setCompleteStat] = useState(false)
+
+    useEffect(() => {
+        setType(item.type)
+        setQuestion(item.question)
+        setChoices(item.choices)
+    }, [item])
 
     const placeholder = {
         label: 'Pick a type of this question',
@@ -170,6 +176,10 @@ const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditio
         setAdditionalPending(false)
     }
 
+    const cancelThis = () => {
+        cancelAdditional(index)
+    }
+
     const completeAdditionalCard = () => {
         return (
             <Container>
@@ -182,6 +192,7 @@ const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditio
                     <RNPickerSelect
                         style={pickerSelectStyles}
                         value={type}
+                        onValueChange={() => { }}
                         disabled={true}
                         items={[
                             { label: 'Single option', value: 1 },
@@ -204,7 +215,7 @@ const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditio
                     <ButtonTab onPress={() => { setCompleteStat(false) }}>
                         <ApplyText>Edit</ApplyText>
                     </ButtonTab>
-                    <ButtonTab style={{ backgroundColor: Constants.redColor }}>
+                    <ButtonTab onPress={cancelThis} style={{ backgroundColor: Constants.redColor }}>
                         <ApplyText>Delete</ApplyText>
                     </ButtonTab>
                 </ButtonRow>
@@ -272,7 +283,7 @@ const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditio
                     />
                 </FormTab>
                 {renderEditOption()}
-                <ApplyTab onPress={cancelAdditional} style={{ backgroundColor: Constants.redColor }}>
+                <ApplyTab onPress={cancelThis} style={{ backgroundColor: Constants.redColor }}>
                     <ApplyText>Cancel</ApplyText>
                 </ApplyTab>
             </Container>
@@ -280,7 +291,3 @@ const AdditionalCard = ({ index, editOption, setAdditionalPending, cancelAdditio
 }
 
 export default AdditionalCard
-
-// <TouchableIcon style={{ margin: 0, alignSelf: 'flex-end', borderWidth: 1, borderColor: 'red' }}>
-                //     <FontAwesome type='FontAwesome' name='close' color='red' size={18} />
-                // </TouchableIcon>

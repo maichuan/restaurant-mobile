@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 import Constants from '../../utils/constants'
+import { Dimensions } from "react-native";
+
+const Height = Dimensions.get("window").height;
+
+const Width = Dimensions.get("window").width;
 
 export const Container = styled.ScrollView`
 `
@@ -71,11 +76,12 @@ export const EditImg = styled.ImageBackground`
 export const BottomPart = styled.View`
     margin: 15px;
     width: 305px;
-    min-height: 250px;
+    min-height: 220px;
     align-items: center;
     border-radius: 10px;
     border-width: 1.5px;
     border-color: lightgrey;
+    flex-direction: column;
 `
 export const BottomHead = styled.View`
     width: 97%;
@@ -111,4 +117,17 @@ export const Instruction = styled.Text`
     font-style: italic;
     font-size: 20px;
     color: lightgrey;
+`
+export const CreateBtn = styled.TouchableOpacity`
+    width: 100%;
+    height: ${Height * 0.1 + "px"};
+    justify-content: center;
+    align-items: center;
+    background-color: lightgreen;
+`
+export const CreateText = styled.Text`
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: white;
 `
