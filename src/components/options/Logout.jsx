@@ -21,16 +21,10 @@ const Text = styled.Text`
 
 const Logout = ({ navigation, authStore }) => {
   const logOut = () => {
-    firebaseApp
-      .auth()
-      .signOut()
-      .then(() => {
-        authStore.removeAuth();
-        navigation.navigate("Login");
-      })
-      .catch((E) => {
-        console.log(E);
-      });
+    firebaseApp.auth().signOut();
+
+    authStore.removeAuth();
+    navigation.navigate("Login");
   };
 
   return (

@@ -26,7 +26,9 @@ const Login = ({ navigation, authStore }) => {
   const [pass, setPass] = useState("");
 
   useEffect(() => {
-    navigation.navigate("Home");
+    if (authStore.auth.id) {
+      navigation.navigate("Home");
+    }
   }, [authStore.auth]);
 
   const signin = () => {
