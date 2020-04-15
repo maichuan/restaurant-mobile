@@ -19,6 +19,7 @@ import {
   SRButton,
   HLine,
   SText,
+  SafeView,
 } from "./styled";
 
 const Login = ({ navigation, authStore }) => {
@@ -26,7 +27,7 @@ const Login = ({ navigation, authStore }) => {
   const [pass, setPass] = useState("");
 
   useEffect(() => {
-    if (authStore.auth.id) {
+    if (authStore.auth.uid) {
       navigation.navigate("Home");
     }
   }, [authStore.auth]);
@@ -56,33 +57,35 @@ const Login = ({ navigation, authStore }) => {
   };
 
   return (
-    <Container>
-      <ProfileImg />
-      <Content behavior={Platform.Os == "ios" ? "padding" : "height"}>
-        <Input
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          placeholder="Email Addesss"
-        />
-        <Input
-          onChangeText={(text) => {
-            setPass(text);
-          }}
-          secureTextEntry
-          placeholder="Password"
-        />
-        <BGroup>
-          <SLButton onPress={signin}>
-            <SText>SignIn</SText>
-          </SLButton>
-          <HLine />
-          <SRButton onPress={register}>
-            <SText>Register</SText>
-          </SRButton>
-        </BGroup>
-      </Content>
-    </Container>
+    <SafeView>
+      <Container>
+        <ProfileImg />
+        <Content behavior={Platform.Os == "ios" ? "padding" : "height"}>
+          <Input
+            onChangeText={(text) => {
+              setEmail(text);
+            }}
+            placeholder="Email Addesss"
+          />
+          <Input
+            onChangeText={(text) => {
+              setPass(text);
+            }}
+            secureTextEntry
+            placeholder="Password"
+          />
+          <BGroup>
+            <SLButton onPress={signin}>
+              <SText>SignIn</SText>
+            </SLButton>
+            <HLine />
+            <SRButton onPress={register}>
+              <SText>Register</SText>
+            </SRButton>
+          </BGroup>
+        </Content>
+      </Container>
+    </SafeView>
   );
 };
 
@@ -92,7 +95,7 @@ Login.propTypes = {
 
 export default compose(
   dismissKeyBoard,
-  withSafeArea,
+  // withSafeArea,
   inject(({ rootStore }) => ({
     authStore: rootStore.authStore,
   })),
