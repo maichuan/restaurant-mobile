@@ -33,18 +33,38 @@ const CreateMenu = ({ navigation }) => {
     const [name, setName] = useState('')
     const [des, setDes] = useState('')
     const [price, setPrice] = useState(0.0)
-    const [additionals, setAdditionals] = useState([])
+    const [additionalPending, setAdditionalPending] = useState(false)
+    const [options, setOptions] = useState([])
 
     const createMenu = () => {
 
     }
 
-    const createAdditional = () => {
-        setAdditionals([...additionals, <AdditionalCard />])
+    const cancelAdditional = () => {
+        console.log(options);
+        // additionals.pop()
+        // let newadditionals = additionals
+        // console.log(newadditionals);
+
+        // setAdditionals(newadditionals)
+        setAdditionalPending(false)
+    }
+
+    const addOption = () => {
+        if (!additionalPending) {
+            setOptions([...options, { question: '', type: 0, choice: [] }])
+            setAdditionalPending(true)
+        }
+    }
+
+    const editOption = (index, option) => {
+        let newoptions = [...options.slice(0, index), option, ...options.slice(index + 1, options.length)]
+        setOptions(newoptions)
+
     }
 
     const showInstruction = () => {
-        return additionals.length > 0 ? <></> : <InstructionWrap>
+        return options.length > 0 ? <></> : <InstructionWrap>
             <Instruction>"You can add some option for your dish here"</Instruction>
         </InstructionWrap>
     }
@@ -81,14 +101,12 @@ const CreateMenu = ({ navigation }) => {
                     <BottomPart>
                         <BottomHead>
                             <BottomHeadText>Additional</BottomHeadText>
-                            <TouchableIcon onPress={createAdditional}>
+                            <TouchableIcon onPress={addOption}>
                                 <FontAwesome style={{ paddingRight: 10 }} color={Constants.strongColor} type='FontAwesome' name='plus-square' size={25} />
                             </TouchableIcon>
                         </BottomHead>
                         {showInstruction()}
-                        {additionals.map(item => {
-                            return item
-                        })}
+                        {options.map((index) => <AdditionalCard index={index} cancelAdditional={cancelAdditional} setAdditionalPending={setAdditionalPending} editOption={editOption} />)}
                     </BottomPart>
                 </Content>
             </KAVContent>

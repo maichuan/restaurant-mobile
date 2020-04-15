@@ -34,7 +34,7 @@ export const StatusBox = styled.View`
   border-bottom-width: 1.3px;
   border-color: ${Constants.strongColor};
   width: ${Width + "px"};
-  padding: ${Width > 400 ? "0 25px" : "0 10 px"};
+  padding: ${Width > 400 ? "0 25px" : "0 10px"};
   margin-top: 20px;
   flex-direction: row;
   justify-content: space-between;
