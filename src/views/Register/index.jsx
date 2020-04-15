@@ -1,52 +1,121 @@
-import React, { useState, useEffect } from 'react'
-import withSafeArea from '../../hocs/withSafeView'
-import dismissKeyBoard from '../../hocs/dismissKeyboard'
-import { firebaseApp } from '../../utils/firebase'
-import { serverClient } from '../../api'
-import { Container, Head, Input, FormBlock, RegButton, RegText } from './styled'
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-native";
+import withSafeArea from "../../hocs/withSafeView";
+import dismissKeyBoard from "../../hocs/dismissKeyboard";
+import { firebaseApp } from "../../utils/firebase";
+import { serverClient } from "../../api";
+import {
+  Container,
+  Head,
+  Input,
+  FormBlock,
+  RegButton,
+  RegText,
+  SafeView,
+} from "./styled";
 
-const Register = ({ navigation }) => {
-    const [resName, setResName] = useState("")
-    const [resEmail, setResEmail] = useState("")
-    const [resPhone, setResPhone] = useState("")
-    const [resPass, setResPass] = useState("")
+import { observer, inject } from "mobx-react";
+import { compose } from "recompose";
 
-    const register = () => {
-        navigation.navigate('Main');
-        // if (firebaseApp) {
-        //     firebaseApp
-        //         .auth()
-        //         .createUserWithEmailAndPassword(resEmail, resPass)
-        //         .then(user => {
-        //             serverClient.post('restaurants', {
-        //                 uid: user.user.uid,
-        //             })
+const Register = ({ navigation, spinnerStore, authStore }) => {
+  const [resName, setResName] = useState("");
+  const [resEmail, setResEmail] = useState("");
+  const [resPhone, setResPhone] = useState("");
+  const [resPass, setResPass] = useState("");
+  const [username, setUsername] = useState("");
 
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error)
-        //             Alert.alert(
-        //                 'SignUp Failed',
-        //                 'Check your email format',
-        //                 [{ text: 'OK', onPress: () => { } }],
-        //                 { cancelable: false },
-        //             )
-        //         })
-        // }
+  const validateInput = (name, phone, uname) => {
+    if (name === "" || phone === "" || uname === "") {
+      return false;
     }
+    return true;
+  };
 
-    return (
-        <Container>
-            <Head>Register your restaurant</Head>
-            <FormBlock>
-                <Input onChangeText={text => { setResName(text) }} placeholder="Restaurant name" />
-                <Input onChangeText={text => { setResEmail(text) }} placeholder="Email" />
-                <Input onChangeText={text => { setResPhone(text) }} placeholder="Phone number" />
-                <Input onChangeText={text => { setResPass(text) }} placeholder="Password" secureTextEntry={true} />
-                <RegButton onPress={register}><RegText>Register</RegText></RegButton>
-            </FormBlock>
-        </Container>
-    )
-}
+  const register = () => {
+    if (firebaseApp && validateInput(resName, resPhone, username)) {
+      spinnerStore.open();
 
-export default dismissKeyBoard(withSafeArea(Register))
+      firebaseApp
+        .auth()
+        .createUserWithEmailAndPassword(resEmail, resPass)
+        .then(async (user) => {
+          const { data } = await serverClient.post("/user/owner", {
+            uid: user.user.uid,
+            username: username,
+            restaurantName: resName,
+            phoneno: resPhone,
+          });
+
+          authStore.setRestaurant(data.restaurant);
+          authStore.setUser(data.user);
+          navigation.navigate("Main");
+          spinnerStore.close();
+        })
+        .catch(function (error) {
+          console.log(error);
+          spinnerStore.close();
+          Alert.alert(
+            "SignUp Failed",
+            "Check your email format",
+            [{ text: "OK", onPress: () => {} }],
+            { cancelable: false }
+          );
+        });
+    } else {
+      Alert.alert(
+        "SignUp Failed",
+        "Incomplete data",
+        [{ text: "OK", onPress: () => {} }],
+        { cancelable: false }
+      );
+    }
+  };
+
+  return (
+    <SafeView>
+      <Container>
+        <Head>Register your restaurant</Head>
+        <FormBlock>
+          <Input
+            onChangeText={(text) => {
+              setResEmail(text);
+            }}
+            placeholder="Email"
+          />
+          <Input
+            onChangeText={(text) => {
+              setResPass(text);
+            }}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
+          <Input onChangeText={setUsername} placeholder="Username" />
+          <Input
+            onChangeText={(text) => {
+              setResName(text);
+            }}
+            placeholder="Restaurant name"
+          />
+          <Input
+            onChangeText={(text) => {
+              setResPhone(text);
+            }}
+            placeholder="Phone number"
+          />
+          <RegButton onPress={register}>
+            <RegText>Register</RegText>
+          </RegButton>
+        </FormBlock>
+      </Container>
+    </SafeView>
+  );
+};
+
+export default compose(
+  dismissKeyBoard,
+  inject(({ rootStore }) => ({
+    spinnerStore: rootStore.spinnerStore,
+    authStore: rootStore.authStore,
+  })),
+  observer
+)(Register);
