@@ -33,5 +33,6 @@ export class AuthStore {
   removeAuth = () => {
     this.auth = {};
     this.user = { username: "guest" };
+    this.restaurant = {};
   };
 }
