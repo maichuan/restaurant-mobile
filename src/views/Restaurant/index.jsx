@@ -15,6 +15,8 @@ import {
   EditLocal,
   EditContext,
   EditText,
+  UpdateButton,
+  UpdateText,
 } from "./styled";
 
 import { observer, inject } from "mobx-react";
@@ -25,13 +27,23 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
   const [location, setLocation] = useState({});
   const [name, setName] = useState("name");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     if (authStore.restaurant.id) {
       setName(authStore.restaurant.name);
       setPhone(authStore.restaurant.phoneno);
+      setAddress(authStore.restaurant.address);
     }
   }, []);
+
+  const updateData = () => {
+    serverClient.put(`/restaurants/${authStore.restaurant.id}`, {
+      name,
+      phoneno: phone,
+      address,
+    });
+  };
 
   const openModal = () => {
     setMapVisible(true);
@@ -42,7 +54,8 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
   };
 
   const storeLocation = (location) => {
-    setLocation(location);
+    const { latitude, longitude } = location;
+    setLocation({ latitude, longitude });
   };
 
   return (
@@ -59,6 +72,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
             <EditHead>Name</EditHead>
             <EditContext>
               <EditText
+                placeholder="input name here"
                 multiline={true}
                 value={name}
                 onChangeText={(text) => {
@@ -78,6 +92,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
             <EditHead>Phone No.</EditHead>
             <EditContext>
               <EditText
+                placeholder="input phone no. here"
                 multiline={true}
                 value={phone}
                 onChangeText={(text) => {
@@ -94,9 +109,29 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
             </EditContext>
           </EditTab>
           <EditTab>
+            <EditHead>Address</EditHead>
+            <EditContext>
+              <EditText
+                placeholder="input address here"
+                multiline={true}
+                value={address}
+                onChangeText={(text) => {
+                  setAddress(text);
+                }}
+              />
+              <FontAwesome
+                style={{ marginLeft: 15 }}
+                type="FontAwesome"
+                color="black"
+                name="edit"
+                size={22}
+              />
+            </EditContext>
+          </EditTab>
+          <EditTab>
             <EditHead>Location</EditHead>
             <EditLocal onPress={openModal}>
-              <Text style={{ color: "grey" }}>Edit location</Text>
+              <Text style={{ color: "#4a2700" }}>Edit location</Text>
               <FontAwesome
                 style={{ marginLeft: 15 }}
                 type="FontAwesome"
@@ -107,6 +142,9 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
             </EditLocal>
           </EditTab>
         </InfoBox>
+        <UpdateButton activeOpacity={0.8} onPress={updateData}>
+          <UpdateText>Update</UpdateText>
+        </UpdateButton>
         <MenuList navigation={navigation} />
       </Content>
     </Container>
