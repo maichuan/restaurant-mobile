@@ -28,12 +28,14 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
   const [name, setName] = useState("name");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [imgUrl, setImgUrl] = useState();
 
   useEffect(() => {
     if (authStore.restaurant.id) {
       setName(authStore.restaurant.name);
       setPhone(authStore.restaurant.phoneno);
       setAddress(authStore.restaurant.address);
+      setImgUrl(authStore.restaurant.imgURL);
     }
   }, []);
 
@@ -66,7 +68,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
         visible={mapVisible}
       />
       <Content>
-        <ImgPicker />
+        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} />
         <InfoBox>
           <EditTab>
             <EditHead>Name</EditHead>

@@ -40,7 +40,9 @@ export const RegButton = styled.TouchableOpacity`
   margin-top: 10px;
 `;
 export const RegText = styled.Text`
-  color: white;
+  color: ${Constant.strongColor};
+  font-weight: 700;
   margin: 10px;
+  font-size: 16px;
   text-align: center;
 `;

@@ -18,8 +18,8 @@ const Img = styled.ImageBackground`
   height: 120px;
 `;
 
-const ImgPicker = ({ storagePath }) => {
-  const [uri, setURI] = useState();
+const ImgPicker = ({ storagePath, imgUrl, onImgUrlUpdate }) => {
+  // const [uri, setURI] = useState();
   const [imgStatus, setImgStatus] = useState(false);
 
   useEffect(() => {
@@ -44,10 +44,10 @@ const ImgPicker = ({ storagePath }) => {
         quality: 1,
       });
       if (!result.cancelled) {
-        let imgURL = await upLoad(result.uri);
-        console.log(imgURL);
+        let newImgURL = await upLoad(result.uri);
+        console.log(newImgURL);
         setImgStatus(true);
-        setURI(imgURL);
+        onImgUrlUpdate(newImgURL);
       }
     } catch (E) {
       console.log(E);
@@ -68,21 +68,15 @@ const ImgPicker = ({ storagePath }) => {
     });
   };
 
-  const renderIconImg = () => {
-    return imgStatus ? (
-      <></>
-    ) : (
-      <FontAwesome type="FontAwesome" name="image" color="grey" size={35} />
-    );
-  };
-
   return (
     <EditImg onPress={onPress}>
       <Img
         imageStyle={{ resizeMode: "stretch", borderRadius: 20 }}
-        source={{ uri: uri }}
+        source={{ uri: imgUrl }}
       >
-        {renderIconImg()}
+        {!imgStatus && (
+          <FontAwesome type="FontAwesome" name="image" color="grey" size={35} />
+        )}
       </Img>
     </EditImg>
   );
