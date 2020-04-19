@@ -7,7 +7,7 @@ import { compose } from "recompose";
 import Constants from "../../utils/constants";
 import { serverClient } from "../../api";
 import OrderCard from "../../components/home/OrderCard";
-import CurrentOrderCard from "../../components/home/CurrectOrderCard";
+import CurrentOrderCard from "../../components/home/CurrentOrderCard";
 import {
   Container,
   HeadBox,
@@ -62,6 +62,10 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
     fetchOrder();
   }, [lastDone]);
 
+  useEffect(() => {
+    data.map((d) => console.log(d.id, d.status));
+  }, [data]);
+
   const toggleResStatus = () => {
     if (resStatus) {
       // Alert user wether they want to close their restaurant.
@@ -87,6 +91,13 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
       setStatusColor({ backgroundColor: "#0ffc03" });
       setStatusText("Open");
     }
+  };
+
+  const pickToCook = (order) => {
+    setData((prev) => [
+      ...prev.filter((p) => p !== order),
+      { ...order, status: 1 },
+    ]);
   };
 
   return (
@@ -126,7 +137,12 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
                 {data
                   .filter((d) => d.status == 0)
                   .map((d, i) => (
-                    <OrderCard key={i} orderData={d} />
+                    <OrderCard
+                      key={i}
+                      restaurantId={authStore.restaurant.id}
+                      onPickToCook={pickToCook}
+                      orderData={d}
+                    />
                   ))}
               </OrderContent>
             </OrderBox>

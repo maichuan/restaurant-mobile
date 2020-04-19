@@ -78,8 +78,7 @@ const CurrentOrderCard = ({
 }) => {
   const fetchOrder = async () => {
     spinnerStore.open();
-    await serverClient.post(`/order/complete`, {
-      restaurantId,
+    await serverClient.post(`/order/${restaurantId}/complete`, {
       confirmOrderId: orderData.id,
     });
     spinnerStore.close();

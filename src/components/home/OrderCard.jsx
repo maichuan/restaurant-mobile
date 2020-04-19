@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Alert } from "react-native";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Constant from "../../utils/constants";
+import { serverClient } from "../../api";
 
 const Card = styled.TouchableOpacity`
   border-bottom-width: 1px;
@@ -26,9 +28,33 @@ const QTYnum = styled.Text`
   font-weight: bold;
 `;
 
-const OrderCard = ({ orderData }) => {
+const OrderCard = ({ orderData, onPickToCook, restaurantId }) => {
+  const fetchOrder = async () => {
+    const res = await serverClient.put(`/order/${restaurantId}`, {
+      confirmOrderId: orderData.id,
+    });
+    console.log(res);
+    onPickToCook(orderData);
+    // if (status === 200) {
+    // }
+  };
+
+  const handleClicked = () => {
+    Alert.alert("Pick this order to cooking?", "", [
+      {
+        text: "Yes",
+        onPress: async () => {
+          await fetchOrder();
+        },
+        style: "cancel",
+      },
+      {
+        text: "Cancel",
+      },
+    ]);
+  };
   return (
-    <Card>
+    <Card activeOpacity={0.8} onPress={handleClicked}>
       <MenuBox>
         <MenuText>{orderData.name}</MenuText>
         <DesText>{orderData.des}</DesText>
