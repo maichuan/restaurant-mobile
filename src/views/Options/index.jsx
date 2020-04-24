@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import Logout from '../../components/options/Logout'
-import { Container } from './styled'
+import React, { useState, useEffect } from "react";
+import Logout from "../../components/options/Logout";
+import { Container, Text, Box } from "./styled";
 
 const Options = ({ navigation }) => {
+  const handleNavigateToIncome = () => {
+    navigation.navigate("Income");
+  };
 
-    return (
-        <Container>
-            <Logout navigation={navigation} />
-        </Container>
-    )
-}
+  return (
+    <Container>
+      <Box onPress={handleNavigateToIncome}>
+        <Text>Income</Text>
+      </Box>
+      <Logout navigation={navigation} />
+    </Container>
+  );
+};
 
-export default Options
+export default Options;

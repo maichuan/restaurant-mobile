@@ -5,14 +5,17 @@ import { firebaseApp } from "../../utils/firebase";
 
 import { observer, inject } from "mobx-react";
 import { compose } from "recompose";
+import { Width } from "../../utils/utils";
 
 const Container = styled.TouchableOpacity`
-    background-color: ${Constant.redColor} 
-    justify-content: center;
-    align-items: center; 
-    align-self: flex-end
-    width: 100%;
-    height: 60px;
+  background-color: ${Constant.redColor};
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  width: ${Width / 3 + "px"};
+  height: ${Width / 3 + "px"};
+  border-radius: 100px;
+  margin: 10px;
 `;
 const Text = styled.Text`
   color: white;

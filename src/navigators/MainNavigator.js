@@ -11,6 +11,8 @@ import {
 } from "react-navigation-stack";
 import Constants from "../utils/constants";
 import TabBarIcon from "../components/common/TabBarIcon";
+import Income from "../views/Income";
+import DateIncome from "../views/DateIncome";
 
 const options = {
   headerMode: "none",
@@ -68,6 +70,8 @@ MainTab.navigationOptions = ({ navigation }) => {
 const OptionsTab = createStackNavigator(
   {
     Options: Options,
+    Income,
+    DateIncome,
   },
   optionsHeader
 );

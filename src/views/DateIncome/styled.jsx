@@ -6,19 +6,8 @@ export const Container = styled.View`
   flex-direction: column;
   background-color: ${Constant.veryWeakColor};
   height: 100%;
-  justify-content: center;
-`;
-export const Box = styled.TouchableOpacity`
-  background-color: ${Constant.tabColor};
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  width: ${Width / 3 + "px"};
-  height: ${Width / 3 + "px"};
-  border-radius: 100px;
-  margin: 10px;
 `;
 export const Text = styled.Text`
   color: ${Constant.strongColor};
-  font-size: 28px;
+  font-size: 23px;
 `;

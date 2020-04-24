@@ -13,8 +13,8 @@ export const Box = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   align-self: center;
-  width: ${Width / 3 + "px"};
-  height: ${Width / 3 + "px"};
+  width: ${Width / 3};
+  height: ${Width / 3};
   border-radius: 100px;
   margin: 10px;
 `;
