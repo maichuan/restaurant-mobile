@@ -43,6 +43,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
     serverClient.put(`/restaurants/${authStore.restaurant.id}`, {
       name,
       phoneno: phone,
+      imgURL: imgUrl,
       address,
     });
   };
@@ -58,6 +59,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
   const storeLocation = (location) => {
     const { latitude, longitude } = location;
     setLocation({ latitude, longitude });
+    console.log(location);
   };
 
   return (
@@ -68,7 +70,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
         visible={mapVisible}
       />
       <Content>
-        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} />
+        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} resId={authStore.restaurant.id} />
         <InfoBox>
           <EditTab>
             <EditHead>Name</EditHead>

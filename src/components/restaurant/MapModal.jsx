@@ -38,13 +38,20 @@ const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
-const Cancel = styled.Button``;
+const Footer = styled.View`
+    width: 100%;
+    height: 35px;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+`;
+const BTN = styled.Button``;
 const CurrentLocal = styled.TouchableOpacity`
   margin: 5px;
   margin-right: 10px;
 `;
 const Map = styled(MapView)`
-  height: ${Height / 1.2 + "px"};
+  height: ${Height / 1.35 + "px"};
   width: ${Width / 1.1 + "px"};
 `;
 
@@ -56,7 +63,7 @@ const MapModal = ({ visible, closeModal, storeLocation }) => {
       latitudeDelta: 0.0882,
       longitudeDelta: 0.0421,
     },
-    marker: <></>,
+    marker: { comp: <></>, c: {} },
   };
   const [{ region, marker }, setState] = useState(initialState);
 
@@ -66,16 +73,23 @@ const MapModal = ({ visible, closeModal, storeLocation }) => {
       console.warn("Permission was not granted");
     }
     let local = await Location.getCurrentPositionAsync({});
-    let region = {
+    let c = {
       latitude: local.coords.latitude,
       longitude: local.coords.longitude,
-    };
+    }
+    setState({
+      region: {
+        latitude: local.coords.latitude,
+        longitude: local.coords.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta
+      },
+      marker: { comp: <Marker coordinate={c} />, c: c }
+    })
   };
 
-  const handleMarker = (coordiantes) => {
-    let c = coordiantes;
-    setState({ region: c, marker: <Marker coordinate={c} /> });
-    // console.log(region);
+  const handleMarker = (coordinate) => {
+    setState({ region: region, marker: { comp: <Marker coordinate={coordinate} />, c: coordinate } });
   };
 
   return (
@@ -83,7 +97,7 @@ const MapModal = ({ visible, closeModal, storeLocation }) => {
       <Container>
         <Content>
           <Header>
-            <Cancel
+            <BTN
               onPress={() => {
                 closeModal();
                 setState(initialState);
@@ -100,16 +114,20 @@ const MapModal = ({ visible, closeModal, storeLocation }) => {
             </CurrentLocal>
           </Header>
           <Map
-            initialRegion={region}
+            region={region}
+            onRegionChangeComplete={r => { setState({ region: r, marker: marker }) }}
             onPress={(event) => {
               handleMarker(event.nativeEvent.coordinate);
             }}
             onMarkerPress={() => {
-              setState({ marker: <></> });
+              setState({ region: region, marker: { comp: <></>, c: {} } });
             }}
           >
-            {marker}
+            {marker.comp}
           </Map>
+          <Footer>
+            <BTN onPress={() => { storeLocation(marker.c); closeModal(); }} title="Apply" />
+          </Footer>
         </Content>
       </Container>
     </CModal>

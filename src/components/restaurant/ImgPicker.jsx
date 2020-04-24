@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
+import { serverClient } from "../../api";
 
 const EditImg = styled.TouchableOpacity`
   margin: 20px;
@@ -18,13 +19,12 @@ const Img = styled.ImageBackground`
   height: 120px;
 `;
 
-const ImgPicker = ({ storagePath, imgUrl, onImgUrlUpdate }) => {
-  // const [uri, setURI] = useState();
+const ImgPicker = ({ imgUrl, onImgUrlUpdate, resId }) => {
   const [imgStatus, setImgStatus] = useState(false);
 
   useEffect(() => {
-    console.log(imgStatus);
-  });
+    if (imgUrl) setImgStatus(true)
+  }, [imgUrl]);
 
   const getPermissionAsync = async () => {
     if (Constants.platform.ios) {
@@ -55,7 +55,7 @@ const ImgPicker = ({ storagePath, imgUrl, onImgUrlUpdate }) => {
   };
 
   const upLoad = async (img) => {
-    let ref = firebaseApp.storage().ref().child("/images/test.jpg");
+    let ref = firebaseApp.storage().ref().child("/images/resprofile/" + resId + "_prof.jpg");
     let response = await fetch(img);
     let blob = await response.blob();
     let snapshot = await ref.put(blob);
