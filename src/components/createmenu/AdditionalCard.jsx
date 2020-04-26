@@ -99,7 +99,7 @@ const Choice = styled.TextInput`
   margin-left: 10px;
   background-color: ${Constants.weakColor};
 `;
-const AppliedChoice = styled.TextInput`
+const AppliedChoice = styled.Text`
   width: 85%;
   height: 25px;
   margin-left: 10px;
@@ -201,7 +201,7 @@ const AdditionalCard = ({
           <RNPickerSelect
             style={pickerSelectStyles}
             value={type}
-            onValueChange={() => {}}
+            onValueChange={() => { }}
             disabled={true}
             items={[
               { label: "Single option", value: 1 },
@@ -261,8 +261,7 @@ const AdditionalCard = ({
                   >
                     <FontAwesome name="remove" type="FontAwesome" size={26} />
                   </TouchableIcon>
-                  // TODO: Change here
-                  <AppliedChoice onChangeText={() => {}}>{item}</AppliedChoice>
+                  <AppliedChoice onChangeText={() => { }}>{item}</AppliedChoice>
                 </ChoiceTab>
               );
             })}
@@ -300,45 +299,45 @@ const AdditionalCard = ({
   return completeStat ? (
     <>{completeAdditionalCard()}</>
   ) : (
-    <Container>
-      <FormTab>
-        <HeadWrap>
-          <HeadText>Question</HeadText>
-        </HeadWrap>
-        <FormInput
-          value={question}
-          onChangeText={(text) => {
-            setQuestion(text);
-          }}
-        ></FormInput>
-      </FormTab>
-      <FormTab style={{ marginBottom: "3%" }}>
-        <HeadWrap>
-          <HeadText>Type</HeadText>
-        </HeadWrap>
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          placeholder={placeholder}
-          value={type}
-          onValueChange={(value) => {
-            setType(value);
-          }}
-          items={[
-            { label: "Single option", value: 1 },
-            { label: "Multiple options", value: 0 },
-            { label: "Default note", value: 3 },
-          ]}
-        />
-      </FormTab>
-      {renderEditOption()}
-      <ApplyTab
-        onPress={cancelThis}
-        style={{ backgroundColor: Constants.redColor }}
-      >
-        <ApplyText>Cancel</ApplyText>
-      </ApplyTab>
-    </Container>
-  );
+      <Container>
+        <FormTab>
+          <HeadWrap>
+            <HeadText>Question</HeadText>
+          </HeadWrap>
+          <FormInput
+            value={question}
+            onChangeText={(text) => {
+              setQuestion(text);
+            }}
+          ></FormInput>
+        </FormTab>
+        <FormTab style={{ marginBottom: "3%" }}>
+          <HeadWrap>
+            <HeadText>Type</HeadText>
+          </HeadWrap>
+          <RNPickerSelect
+            style={pickerSelectStyles}
+            placeholder={placeholder}
+            value={type}
+            onValueChange={(value) => {
+              setType(value);
+            }}
+            items={[
+              { label: "Single option", value: 1 },
+              { label: "Multiple options", value: 0 },
+              { label: "Default note", value: 3 },
+            ]}
+          />
+        </FormTab>
+        {renderEditOption()}
+        <ApplyTab
+          onPress={cancelThis}
+          style={{ backgroundColor: Constants.redColor }}
+        >
+          <ApplyText>Cancel</ApplyText>
+        </ApplyTab>
+      </Container>
+    );
 };
 
 export default AdditionalCard;

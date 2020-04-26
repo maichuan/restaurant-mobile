@@ -19,11 +19,11 @@ const Img = styled.ImageBackground`
   height: 120px;
 `;
 
-const ImgPicker = ({ imgUrl, onImgUrlUpdate, resId }) => {
+const ImgPicker = ({ imgUrl, onImgUrlUpdate, storagePath }) => {
   const [imgStatus, setImgStatus] = useState(false);
 
   useEffect(() => {
-    if (imgUrl) setImgStatus(true)
+    if (imgUrl && imgUrl != "") setImgStatus(true)
   }, [imgUrl]);
 
   const getPermissionAsync = async () => {
@@ -55,7 +55,7 @@ const ImgPicker = ({ imgUrl, onImgUrlUpdate, resId }) => {
   };
 
   const upLoad = async (img) => {
-    let ref = firebaseApp.storage().ref().child("/images/resprofile/" + resId + "_prof.jpg");
+    let ref = firebaseApp.storage().ref().child(storagePath);
     let response = await fetch(img);
     let blob = await response.blob();
     let snapshot = await ref.put(blob);

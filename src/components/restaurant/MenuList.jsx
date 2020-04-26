@@ -62,8 +62,8 @@ const MenuList = ({ menus, navigation }) => {
 
   const showInfo = () => {
     return menuList.length > 0 ? (
-      menuList.map(item => {
-        return <MenuCard data={item} />
+      menuList.map((item, index) => {
+        return <MenuCard key={index} data={item} />
       })
     ) : (
         <InfoWrap>

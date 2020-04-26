@@ -31,7 +31,8 @@ const Name = styled.Text`
     font-size: 16px;
 `
 const Des = styled.Text`
-    font-size: 8px;
+    margin: 10px;
+    font-size: 12px;
 `
 
 const MenuCard = ({ data }) => {

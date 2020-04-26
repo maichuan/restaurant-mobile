@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Platform, View } from "react-native";
+import { Platform, Alert } from "react-native";
 import withSafeArea from "../../hocs/withSafeView";
 import dismissKeyBoard from "../../hocs/dismissKeyboard";
 import ImgPicker from "../../components/restaurant/ImgPicker";
@@ -40,24 +40,48 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
   const [name, setName] = useState("");
   const [des, setDes] = useState("");
   const [price, setPrice] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [additionalPending, setAdditionalPending] = useState(false);
   const [options, setOptions] = useState([]);
 
   const createMenu = () => {
-    // TODO: use API
-    console.log(options);
-    spinnerStore.open();
-    //   serverClient.post(`/restaurants/${authStore.restaurant.id}/menus`, {
-    //     restaurantId: authStore.restaurant.id,
-    //     name,
-    //     price,
-    //     description: des,
-    //     status: 0,
-    //     imgURL: "",
-    //     question,
-    //   });
-    spinnerStore.close();
+    Alert.alert(
+      "Confirm created menu",
+      "",
+      [
+        {
+          text: "confirm",
+          onPress: () => {
+            spinnerStore.open();
+            serverClient.post(`/restaurants/${authStore.restaurant.id}/menus`, {
+              restaurantId: authStore.restaurant.id,
+              name,
+              price,
+              description: des,
+              status: 1,
+              imgURL: imgUrl,
+              question: JSON.stringify(options),
+            }).then(() => {
+              updateStore()
+              spinnerStore.close();
+              console.log(authStore.restaurant.menus);
+              navigation.navigate('Restaurant')
+            })
+          },
+        },
+        {
+          text: "cancel",
+        },
+      ]
+    );
   };
+
+  const updateStore = async () => {
+    const { data } = await serverClient.get(`restaurants/${authStore.restaurant.id}`);
+    if (data) {
+      authStore.setRestaurant(data);
+    }
+  }
 
   const cancelAdditional = (index) => {
     console.log(index);
@@ -91,11 +115,17 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
     return options.length > 0 ? (
       <></>
     ) : (
-      <InstructionWrap>
-        <Instruction>"You can add some option for your dish here"</Instruction>
-      </InstructionWrap>
-    );
+        <InstructionWrap>
+          <Instruction>"You can add some option for your dish here"</Instruction>
+        </InstructionWrap>
+      );
   };
+
+  const createImgId = () => {
+    let length = authStore.restaurant.menus.length;
+    if (length > 0) return authStore.restaurant.menus[length - 1].id + 1
+    else return 1
+  }
 
   return (
     <SafeView>
@@ -107,7 +137,7 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
           <Content>
             <TopPart>
               <ImgArea>
-                <ImgPicker storagePath={""} />
+                <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} storagePath={"/images/menus/" + authStore.restaurant.id + "/" + createImgId() + ".jpg"} />
               </ImgArea>
               <InfoBox>
                 <InfoTab>

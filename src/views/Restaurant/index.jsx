@@ -36,6 +36,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
       setPhone(authStore.restaurant.phoneno);
       setAddress(authStore.restaurant.address);
       setImgUrl(authStore.restaurant.imgURL);
+      console.log(authStore.restaurant.imgURL);
 
     }
   }, []);
@@ -71,7 +72,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
         visible={mapVisible}
       />
       <Content>
-        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} resId={authStore.restaurant.id} />
+        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} storagePath={"/images/resprofile/" + authStore.restaurant.id + "_prof.jpg"} />
         <InfoBox>
           <EditTab>
             <EditHead>Name</EditHead>
