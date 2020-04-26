@@ -36,6 +36,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
       setPhone(authStore.restaurant.phoneno);
       setAddress(authStore.restaurant.address);
       setImgUrl(authStore.restaurant.imgURL);
+
     }
   }, []);
 
@@ -149,7 +150,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
         <UpdateButton activeOpacity={0.8} onPress={updateData}>
           <UpdateText>Update</UpdateText>
         </UpdateButton>
-        <MenuList navigation={navigation} />
+        <MenuList menus={authStore.restaurant.menus} navigation={navigation} />
       </Content>
     </Container>
   );

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Constants from "../../utils/constants";
 import { FontAwesome } from "@expo/vector-icons";
+import MenuCard from './MenuCard'
+
 
 const Container = styled.View`
   max-width: 95%;
@@ -47,8 +49,12 @@ const InfoText = styled.Text`
 const AddBtn = styled.TouchableOpacity``;
 const Content = styled.View``;
 
-const MenuList = ({ navigation }) => {
+const MenuList = ({ menus, navigation }) => {
   const [menuList, setMenuList] = useState([]);
+
+  useEffect(() => {
+    setMenuList(menus)
+  }, [menus])
 
   const toCreateMenu = () => {
     navigation.navigate("CreateMenu");
@@ -56,12 +62,14 @@ const MenuList = ({ navigation }) => {
 
   const showInfo = () => {
     return menuList.length > 0 ? (
-      <></>
+      menuList.map(item => {
+        return <MenuCard data={item} />
+      })
     ) : (
-      <InfoWrap>
-        <InfoText>"Your menu is still empty"</InfoText>
-      </InfoWrap>
-    );
+        <InfoWrap>
+          <InfoText>"Your menu is still empty"</InfoText>
+        </InfoWrap>
+      );
   };
 
   return (

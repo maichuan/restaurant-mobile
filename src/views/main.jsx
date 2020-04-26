@@ -13,9 +13,13 @@ import Spinner from "../components/common/Spinner";
 const Main = ({ authStore, spinnerStore }) => {
   const fetchUser = async (user) => {
     const { data } = await serverClient.get(`user/${user.uid}?owner=true`);
+
     if (data.user) {
-      authStore.setUser(data.user);
-      authStore.setRestaurant(data.restaurant);
+      const res = await serverClient.get(`restaurants/${data.restaurant.id}`);
+      if (res.data) {
+        authStore.setUser(data.user);
+        authStore.setRestaurant(res.data);
+      }
     }
   };
 
