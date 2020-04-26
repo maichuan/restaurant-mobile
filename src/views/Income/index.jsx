@@ -12,10 +12,10 @@ const Income = ({ navigation, spinnerStore, authStore }) => {
   const [data, setData] = useState([]);
 
   const fetchIncome = async () => {
-    // const { data } = await serverClient.get(`/summary/${authStore.restaurant.id}`);
-    // setData(data.data)
-
-    setData(mock.data);
+    const { data } = await serverClient.get(
+      `/summary/${authStore.restaurant.id}`
+    );
+    setData(data.data);
   };
 
   useEffect(() => {
