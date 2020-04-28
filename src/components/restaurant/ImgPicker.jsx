@@ -23,7 +23,7 @@ const ImgPicker = ({ imgUrl, onImgUrlUpdate, storagePath }) => {
   const [imgStatus, setImgStatus] = useState(false);
 
   useEffect(() => {
-    if (imgUrl && imgUrl != "") setImgStatus(true)
+    if (imgUrl && imgUrl != "") setImgStatus(true);
   }, [imgUrl]);
 
   const getPermissionAsync = async () => {
@@ -72,7 +72,9 @@ const ImgPicker = ({ imgUrl, onImgUrlUpdate, storagePath }) => {
     <EditImg onPress={onPress}>
       <Img
         imageStyle={{ resizeMode: "stretch", borderRadius: 20 }}
-        source={{ uri: imgUrl }}
+        source={
+          imgUrl ? { uri: imgUrl } : require("../../../assets/no_image.png")
+        }
       >
         {!imgStatus && (
           <FontAwesome type="FontAwesome" name="image" color="grey" size={35} />

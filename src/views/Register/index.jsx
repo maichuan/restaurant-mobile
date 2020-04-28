@@ -46,8 +46,16 @@ const Register = ({ navigation, spinnerStore, authStore }) => {
             phoneno: resPhone,
           });
 
-          authStore.setRestaurant(data.restaurant);
-          authStore.setUser(data.user);
+          if (data.user) {
+            const res = await serverClient.get(
+              `restaurants/${data.restaurant.id}`
+            );
+            if (res.data) {
+              authStore.setUser(data.user);
+              authStore.setRestaurant(res.data);
+            }
+          }
+
           navigation.navigate("Main");
           spinnerStore.close();
         })

@@ -36,18 +36,30 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
       setPhone(authStore.restaurant.phoneno);
       setAddress(authStore.restaurant.address);
       setImgUrl(authStore.restaurant.imgURL);
-      console.log(authStore.restaurant.imgURL);
-
+      setLocation({
+        latitude: authStore.restaurant.lat,
+        longitude: authStore.restaurant.long,
+      });
+      // console.log("this is ", authStore.restaurant)
     }
   }, []);
 
-  const updateData = () => {
-    serverClient.put(`/restaurants/${authStore.restaurant.id}`, {
-      name,
-      phoneno: phone,
-      imgURL: imgUrl,
-      address,
-    });
+  const updateData = async () => {
+    spinnerStore.open();
+    const { data } = await serverClient.put(
+      `/restaurants/${authStore.restaurant.id}`,
+      {
+        name,
+        phoneno: phone,
+        imgURL: imgUrl,
+        address,
+        lat: location.latitude,
+        long: location.longitude,
+      }
+    );
+    authStore.setRestaurant({ ...authStore.restaurant, ...data.restaurant });
+
+    spinnerStore.close();
   };
 
   const openModal = () => {
@@ -72,7 +84,13 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
         visible={mapVisible}
       />
       <Content>
-        <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} storagePath={"/images/resprofile/" + authStore.restaurant.id + "_prof.jpg"} />
+        <ImgPicker
+          imgUrl={imgUrl}
+          onImgUrlUpdate={setImgUrl}
+          storagePath={
+            "/images/resprofile/" + authStore.restaurant.id + "_prof.jpg"
+          }
+        />
         <InfoBox>
           <EditTab>
             <EditHead>Name</EditHead>
