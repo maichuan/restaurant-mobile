@@ -4,6 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import styled from "styled-components";
 import RNPickerSelect from "react-native-picker-select";
 import Constants from "../../utils/constants";
+import { Width, Height } from '../../utils/utils'
 
 const Container = styled.View`
   width: 97%;
@@ -11,6 +12,7 @@ const Container = styled.View`
   margin: 5px;
   border-width: 1px;
   border-color: lightgrey;
+  align-items: center;
 `;
 const FormTab = styled.View`
   margin-top: 10px;
@@ -19,7 +21,7 @@ const FormTab = styled.View`
   flex-direction: row;
 `;
 const HeadWrap = styled.View`
-  width: 70px;
+  width: 27%;
   height: 25px;
   justify-content: center;
   border-right-width: 1px;
@@ -36,7 +38,7 @@ const FormInput = styled.TextInput`
   margin-left: 10px;
   align-self: stretch;
   text-align: center;
-  width: 190px;
+  width: 67%;
   height: 25px;
 `;
 const FormText = styled.Text`
@@ -45,7 +47,7 @@ const FormText = styled.Text`
   margin-left: 10px;
   align-self: stretch;
   text-align: center;
-  width: 190px;
+  width: 67%;
   height: 25px;
 `;
 
@@ -55,7 +57,7 @@ const OptionBox = styled.View`
   border-width: 1px;
   border-color: lightgrey;
   align-self: center;
-  width: 270px;
+  width: 91%;
 `;
 const OptionTab = styled.View`
   flex-direction: row;
@@ -121,11 +123,15 @@ const TouchableIcon = styled.TouchableOpacity`
   margin: 5px;
 `;
 
+const Picker = styled.View`
+  width: 67%;
+  margin-left: 10px;
+`
+
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    width: 190,
+    width: '100%',
     height: 25,
-    marginLeft: 10,
     alignSelf: "center",
     textAlign: "center",
     borderWidth: 1,
@@ -198,17 +204,19 @@ const AdditionalCard = ({
           <HeadWrap>
             <HeadText>Type</HeadText>
           </HeadWrap>
-          <RNPickerSelect
-            style={pickerSelectStyles}
-            value={type}
-            onValueChange={() => { }}
-            disabled={true}
-            items={[
-              { label: "Single option", value: 1 },
-              { label: "Multiple options", value: 0 },
-              { label: "Default note", value: 3 },
-            ]}
-          />
+          <Picker>
+            <RNPickerSelect
+              style={pickerSelectStyles}
+              value={type}
+              onValueChange={() => { }}
+              disabled={true}
+              items={[
+                { label: "Single option", value: 1 },
+                { label: "Multiple options", value: 0 },
+                { label: "Default note", value: 3 },
+              ]}
+            />
+          </Picker>
         </FormTab>
         <OptionBox>
           <OptionTab>
@@ -315,19 +323,21 @@ const AdditionalCard = ({
           <HeadWrap>
             <HeadText>Type</HeadText>
           </HeadWrap>
-          <RNPickerSelect
-            style={pickerSelectStyles}
-            placeholder={placeholder}
-            value={type}
-            onValueChange={(value) => {
-              setType(value);
-            }}
-            items={[
-              { label: "Single option", value: 1 },
-              { label: "Multiple options", value: 0 },
-              { label: "Default note", value: 3 },
-            ]}
-          />
+          <Picker>
+            <RNPickerSelect
+              style={pickerSelectStyles}
+              placeholder={placeholder}
+              value={type}
+              onValueChange={(value) => {
+                setType(value);
+              }}
+              items={[
+                { label: "Single option", value: 1 },
+                { label: "Multiple options", value: 0 },
+                { label: "Default note", value: 3 },
+              ]}
+            />
+          </Picker>
         </FormTab>
         {renderEditOption()}
         <ApplyTab

@@ -13,6 +13,7 @@ import Constants from "../utils/constants";
 import TabBarIcon from "../components/common/TabBarIcon";
 import Income from "../views/Income";
 import DateIncome from "../views/DateIncome";
+import QR from '../views/QR'
 
 const options = {
   headerMode: "none",
@@ -72,12 +73,18 @@ const OptionsTab = createStackNavigator(
     Options: Options,
     Income,
     DateIncome,
+    QR,
   },
   optionsHeader
 );
 
 OptionsTab.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
   return {
+    tabBarVisible,
     tabBarLabel: "Options",
     tabBarIcon: ({ tintColor }) => (
       <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gears" />

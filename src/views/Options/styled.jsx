@@ -18,6 +18,16 @@ export const Box = styled.TouchableOpacity`
   border-radius: 100px;
   margin: 10px;
 `;
+export const QR = styled.TouchableOpacity`
+  background-color: lightgreen;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  width: ${Width / 3 + "px"};
+  height: ${Width / 3 + "px"};
+  border-radius: 100px;
+  margin: 10px;
+`;
 export const Text = styled.Text`
   color: ${Constant.strongColor};
   font-size: 28px;
