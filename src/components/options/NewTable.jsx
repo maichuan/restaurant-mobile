@@ -3,7 +3,11 @@ import Constants from '../../utils/constants'
 import { Width, Height } from '../../utils/utils'
 import styled from 'styled-components'
 import QRCode from 'react-native-qrcode-svg';
+import { serverClient } from "../../api";
+import { firebaseApp } from '../../utils/firebase'
 import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
 
 const Modal = styled.Modal`
 `
@@ -50,6 +54,7 @@ const Form = styled.TextInput`
     background-color: white;
     width: 20%;
     height: 100%;
+    text-align: right;
 `
 const BtnGroup = styled.View`
     flex-direction: row;
@@ -75,8 +80,68 @@ const BtnText = styled.Text`
     font-size: 20px;
     color: white;
 `
+const Sqr = styled.View`
+    border-width: 1.1px;
+    border-color: lightgrey;
+    background-color: white;
+    width: 150px;
+    height: 150px;
+`
 
-const NewTable = ({ closeModal, visible }) => {
+const NewTable = ({ closeModal, visible, resId }) => {
+    const [tableNum, setTableNum] = useState()
+    const [qrRef, setQrRef] = useState()
+
+    const getQrValue = () => {
+        return JSON.stringify({
+            id: resId,
+            table: tableNum,
+        })
+    }
+
+    const renderQR = () => {
+        return tableNum ? <QRCode size={150} value={getQrValue()} getRef={(c) => { setQrRef(c) }} /> : <Sqr />
+    }
+
+    const upLoad = async () => {
+        try {
+            let ref = firebaseApp.storage().ref().child('/images/qrcodes/' + resId + '/' + tableNum + '.png');
+            let response = await fetch(FileSystem.cacheDirectory + "temp.png");
+            let blob = await response.blob();
+            let snapshot = await ref.put(blob);
+            return snapshot.ref.getDownloadURL();
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const downLoad = async () => {
+        qrRef.toDataURL(async data => {
+            try {
+                FileSystem.writeAsStringAsync(FileSystem.cacheDirectory + "temp.png", data, { encoding: FileSystem.EncodingType.Base64 }).then(() => {
+                    //CameraRoll.saveToCameraRoll(FileSystem.cacheDirectory + "temp.png", 'photo')
+                    MediaLibrary.saveToLibraryAsync(FileSystem.cacheDirectory + "temp.png")
+                })
+            } catch (e) {
+                console.log(e);
+            }
+        })
+    }
+
+    const applyNewTable = () => {
+        if (qrRef) {
+            downLoad().then(() => {
+                upLoad().then(snapshot => {
+                    console.log(snapshot);
+                    serverClient.post(`/qrcode/${resId}`, {
+                        tableno: tableNum,
+                        imgUrl: snapshot,
+                    })
+                })
+                closeModal()
+            })
+        }
+    }
 
     return (
         <Modal visible={visible} animationType="slide" transparent={true}>
@@ -86,16 +151,12 @@ const NewTable = ({ closeModal, visible }) => {
                         <Head><Title>New Table</Title></Head>
                         <FormBox>
                             <FormHead>Table number</FormHead>
-                            <Form keyboardType={"numeric"} />
+                            <Form keyboardType={"numeric"} placeholder='0' value={tableNum} onChangeText={text => { setTableNum(text) }} />
                         </FormBox>
-                        <QRCode
-                            size={150}
-                            value="wowza"
-                            getRef={(c) => { }}
-                        />
+                        {renderQR()}
                         <BtnGroup>
-                            <Cancel><BtnText>Cancel</BtnText></Cancel>
-                            <Apply onPress={closeModal}><BtnText>Done</BtnText></Apply>
+                            <Cancel onPress={closeModal}><BtnText>Cancel</BtnText></Cancel>
+                            <Apply onPress={applyNewTable}><BtnText>Done</BtnText></Apply>
                         </BtnGroup>
                     </Content>
                 </Container>

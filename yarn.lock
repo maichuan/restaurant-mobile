@@ -1293,6 +1293,11 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@react-native-community/cameraroll@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-1.6.0.tgz#2a4f9318fb53b5b2576269085c60ec7aced764c8"
+  integrity sha512-0P6IDqFlpWmuqLBFvm4WsQ6QR6E7WDadtFQiug/zU4Ieu6wcz70pgbB6yG3uQwGqwQf6HgFq95Z7+SHV3k5hpw==
+
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-3.0.0.tgz#d01d08d1e5ddc1633d82c7d84d48fff07bd39416"
@@ -2760,6 +2765,11 @@ expo-location@~8.0.0:
   integrity sha512-48i4dUCaqPTwSri79yummKwg6vE6loI7d4iHCrbG4EEuN3fhS8I9xU60CEkoNZTziH9zK0iw4KSjr7DbXUAaCw==
   dependencies:
     invariant "^2.2.4"
+
+expo-media-library@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-8.1.0.tgz#f5d4b24819aa518e69d971f92b55c12f60c85ba5"
+  integrity sha512-2oO6UtV4akgX9o5Ok9BRwLh5NZzDk43QBW5RP/EHVSzuVn2yn7IXstmr9wnTl1BpqkPoV8u6w3g9EeU1I2Jljw==
 
 expo-permissions@^8.1.0, expo-permissions@~8.1.0:
   version "8.1.0"

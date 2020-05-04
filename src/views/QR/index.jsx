@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import withSafeArea from '../../hocs/withSafeView'
 import NewTable from '../../components/options/NewTable'
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+import { PropTypes } from "mobx-react";
 import {
     ScrollContainer,
     Container,
@@ -12,7 +15,7 @@ import {
     AddTableText,
 } from './styled'
 
-const QR = ({ navigation }) => {
+const QR = ({ navigation, authStore }) => {
     const [mVisible, setMVisible] = useState(false)
 
     const closeModal = () => {
@@ -21,7 +24,7 @@ const QR = ({ navigation }) => {
 
     return (
         <>
-            <NewTable closeModal={closeModal} visible={mVisible} />
+            <NewTable closeModal={closeModal} visible={mVisible} resId={authStore.restaurant.id} />
             <ScrollContainer>
                 <Container>
                     <Content>
@@ -36,8 +39,14 @@ const QR = ({ navigation }) => {
     )
 }
 
-QR.navigationOptions = props => ({
-    title: 'asd',
-})
+QR.propTypes = {
+    navigation: PropTypes.object,
+};
 
-export default withSafeArea(QR)
+export default compose(
+    inject(({ rootStore }) => ({
+        spinnerStore: rootStore.spinnerStore,
+        authStore: rootStore.authStore,
+    })),
+    observer
+)(QR);
