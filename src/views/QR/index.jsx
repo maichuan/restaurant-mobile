@@ -36,4 +36,8 @@ const QR = ({ navigation }) => {
     )
 }
 
+QR.navigationOptions = props => ({
+    title: 'asd',
+})
+
 export default withSafeArea(QR)
