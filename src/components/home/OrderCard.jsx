@@ -4,6 +4,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Constant from "../../utils/constants";
 import { serverClient } from "../../api";
+import { getOrderType } from "../../utils/utils";
 
 const Card = styled.TouchableOpacity`
   border-bottom-width: 1px;
@@ -33,25 +34,31 @@ const OrderCard = ({ orderData, onPickToCook, restaurantId }) => {
     const res = await serverClient.put(`/order/${restaurantId}`, {
       confirmOrderId: orderData.id,
     });
-    console.log(res);
+    // console.log(res);
     onPickToCook(orderData);
     // if (status === 200) {
     // }
   };
 
   const handleClicked = () => {
-    Alert.alert("Pick this order to cooking?", "", [
-      {
-        text: "Yes",
-        onPress: async () => {
-          await fetchOrder();
+    Alert.alert(
+      "Pick this order to cooking?",
+      `${orderData.name} x${orderData.quantity} \n ${getOrderType(
+        orderData.orderType
+      )}`,
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await fetchOrder();
+          },
+          style: "cancel",
         },
-        style: "cancel",
-      },
-      {
-        text: "Cancel",
-      },
-    ]);
+        {
+          text: "Cancel",
+        },
+      ]
+    );
   };
   return (
     <Card activeOpacity={0.8} onPress={handleClicked}>

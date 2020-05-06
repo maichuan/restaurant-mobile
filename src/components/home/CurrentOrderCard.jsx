@@ -7,7 +7,7 @@ import { observer, inject } from "mobx-react";
 import { compose } from "recompose";
 
 import Constant from "../../utils/constants";
-import { generateListOfOrderDetails } from "../../utils/utils";
+import { generateListOfOrderDetails, getOrderType } from "../../utils/utils";
 import { Width } from "../../utils/utils";
 import constants from "../../utils/constants";
 import { serverClient } from "../../api";
@@ -25,10 +25,15 @@ const MenuBox = styled.View`
   padding: 0 10px;
 `;
 const MenuText = styled.Text`
-  font-size: 20px;
+  font-size: 23px;
   font-weight: bold;
   color: ${Constant.strongColor};
   flex-wrap: wrap;
+`;
+const OrderType = styled.Text`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${Constant.tabColor};
 `;
 const OrderId = styled.Text`
   color: ${Constant.strongColor};
@@ -106,6 +111,9 @@ const CurrentOrderCard = ({
         <QTYnum>{orderData.quantity}</QTYnum>
       </QTYbox>
       <MenuBox>
+        <OrderType>{`${getOrderType(orderData.orderType)} ${
+          orderData.tableno > 0 ? ", Table: " + orderData.tableno : ""
+        }`}</OrderType>
         <MenuText>{orderData.name}</MenuText>
         <OrderId>Order ID:{orderData.id}</OrderId>
         {generateListOfOrderDetails(orderData.details).map((detail, i) => (

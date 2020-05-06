@@ -14,3 +14,13 @@ export const generateListOfOrderDetails = (details) => {
     );
   });
 };
+
+export const getOrderType = (type) => {
+  switch (type) {
+    case 0:
+      return "Eat in";
+    case 1:
+    default:
+      return "Takeaway";
+  }
+};

@@ -45,7 +45,7 @@ const ImgPicker = ({ imgUrl, onImgUrlUpdate, storagePath }) => {
       });
       if (!result.cancelled) {
         let newImgURL = await upLoad(result.uri);
-        console.log(newImgURL);
+        // console.log(newImgURL);
         setImgStatus(true);
         onImgUrlUpdate(newImgURL);
       }

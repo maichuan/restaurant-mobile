@@ -73,7 +73,7 @@ const Restaurant = ({ navigation, spinnerStore, authStore }) => {
   const storeLocation = (location) => {
     const { latitude, longitude } = location;
     setLocation({ latitude, longitude });
-    console.log(location);
+    // console.log(location);
   };
 
   return (

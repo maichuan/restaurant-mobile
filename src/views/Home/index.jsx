@@ -62,9 +62,9 @@ const Home = ({ navigation, spinnerStore, authStore }) => {
     fetchOrder();
   }, [lastDone]);
 
-  useEffect(() => {
-    data.map((d) => console.log(d.id, d.status));
-  }, [data]);
+  // useEffect(() => {
+  //   data.map((d) => console.log(d.id, d.status));
+  // }, [data]);
 
   const toggleResStatus = () => {
     if (resStatus) {

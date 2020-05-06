@@ -45,15 +45,13 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
   const [options, setOptions] = useState([]);
 
   const createMenu = () => {
-    Alert.alert(
-      "Confirm created menu",
-      "",
-      [
-        {
-          text: "confirm",
-          onPress: () => {
-            spinnerStore.open();
-            serverClient.post(`/restaurants/${authStore.restaurant.id}/menus`, {
+    Alert.alert("Confirm created menu", "", [
+      {
+        text: "confirm",
+        onPress: () => {
+          spinnerStore.open();
+          serverClient
+            .post(`/restaurants/${authStore.restaurant.id}/menus`, {
               restaurantId: authStore.restaurant.id,
               name,
               price,
@@ -61,35 +59,37 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
               status: 1,
               imgURL: imgUrl,
               question: JSON.stringify(options),
-            }).then(() => {
-              updateStore()
-              spinnerStore.close();
-              console.log(authStore.restaurant.menus);
-              navigation.navigate('Restaurant')
             })
-          },
+            .then(() => {
+              updateStore();
+              spinnerStore.close();
+              // console.log(authStore.restaurant.menus);
+              navigation.navigate("Restaurant");
+            });
         },
-        {
-          text: "cancel",
-        },
-      ]
-    );
+      },
+      {
+        text: "cancel",
+      },
+    ]);
   };
 
   const updateStore = async () => {
-    const { data } = await serverClient.get(`restaurants/${authStore.restaurant.id}`);
+    const { data } = await serverClient.get(
+      `restaurants/${authStore.restaurant.id}`
+    );
     if (data) {
       authStore.setRestaurant(data);
     }
-  }
+  };
 
   const cancelAdditional = (index) => {
-    console.log(index);
+    // console.log(index);
     let newoptions = [
       ...options.slice(0, index),
       ...options.slice(index + 1, options.length),
     ];
-    console.log(newoptions);
+    // console.log(newoptions);
 
     setOptions(newoptions);
     setAdditionalPending(false);
@@ -115,17 +115,17 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
     return options.length > 0 ? (
       <></>
     ) : (
-        <InstructionWrap>
-          <Instruction>"You can add some option for your dish here"</Instruction>
-        </InstructionWrap>
-      );
+      <InstructionWrap>
+        <Instruction>"You can add some option for your dish here"</Instruction>
+      </InstructionWrap>
+    );
   };
 
   const createImgId = () => {
     let length = authStore.restaurant.menus.length;
-    if (length > 0) return authStore.restaurant.menus[length - 1].id + 1
-    else return 1
-  }
+    if (length > 0) return authStore.restaurant.menus[length - 1].id + 1;
+    else return 1;
+  };
 
   return (
     <SafeView>
@@ -137,7 +137,17 @@ const CreateMenu = ({ navigation, spinnerStore, authStore }) => {
           <Content>
             <TopPart>
               <ImgArea>
-                <ImgPicker imgUrl={imgUrl} onImgUrlUpdate={setImgUrl} storagePath={"/images/menus/" + authStore.restaurant.id + "/" + createImgId() + ".jpg"} />
+                <ImgPicker
+                  imgUrl={imgUrl}
+                  onImgUrlUpdate={setImgUrl}
+                  storagePath={
+                    "/images/menus/" +
+                    authStore.restaurant.id +
+                    "/" +
+                    createImgId() +
+                    ".jpg"
+                  }
+                />
               </ImgArea>
               <InfoBox>
                 <InfoTab>
