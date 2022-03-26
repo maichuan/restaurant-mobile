@@ -21,7 +21,7 @@
     "expo-permissions": "^8.1.0",
     "firebase": "^7.8.0",
     "metro-react-native-babel-preset": "^0.58.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.4",
     "prop-types": "^15.7.2",
